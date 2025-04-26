@@ -1,0 +1,19 @@
+:root {
+  --mainColor : #4a1e2c;
+  --whiteColor : white;
+}
+body {
+margin: 0;
+font-family: Roboto, "Helvetica Neue", sans-serif;
+direction: rtl;
+padding-top: 40px;
+
+
+}
+.mainColor{
+background-color : var(--mainColor);
+}
+
+.whiteColor{
+  color: var(--whiteColor) !important;
+}

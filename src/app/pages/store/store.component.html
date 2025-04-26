@@ -1,0 +1,20 @@
+<div class="container mx-auto row ">
+
+  @for (item of products; track item.id) {
+  <div class="col-12 col-md-6 col-lg-3">
+    <div class="card" style="width: 18rem;" >
+      <img src="{{item.image}}" tyle="width: 100px; height: auto;" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{item.title}}</h5>
+        <p class="card-text">{{item.description}}</p>
+        <p class="card-text">{{item.price}}</p>
+
+        <a  [routerLink]="['/product-details', item.id]" class="btn btn-maroon">عرض المنتج</a>
+        <a  (click)="addToCart(item)" class="btn btn-outline-maroon ">أضف للعربة</a>
+
+      </div>
+  </div>
+
+  </div>
+  }
+  </div>

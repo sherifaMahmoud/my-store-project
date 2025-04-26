@@ -1,0 +1,43 @@
+body {
+  direction: rtl;
+  text-align: right;
+
+}
+[dir="rtl"] .form-label {
+  text-align: right;
+}
+
+.text-danger {
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+.form-label::after {
+  content: " *";
+  color: red;
+}
+.img-fluid {
+  height: 60%;
+  margin-left: 50px;
+  margin-top: 15%;
+}
+.no-asterisk::after {
+  content: none !important;
+}
+
+.btn-maroon {
+  background-color: #4b1c2d;
+  color: white;
+  transition: all 0.3s ease;
+  border: 2px solid #800000;
+  margin-left: 20px;
+  border-radius: 4px;
+  font-weight: 600;
+
+
+}
+.btn-maroon:hover{
+  background-color: white;
+  color: #4b1c2d;
+  transform: translateY(-2px);
+}
