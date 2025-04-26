@@ -1,0 +1,30 @@
+.thank-you-page {
+  min-height: 100vh;
+  background-color: #fff;
+}
+.thank-image {
+  max-width: 400px;
+}
+
+.thank-message {
+  font-size: 18px;
+  color: #4b1c2d;
+  line-height: 1.8;
+}
+
+.btn-maroon {
+  background-color: #4b1c2d;
+  color: white;
+  transition: all 0.3s ease;
+  border: 2px solid #4b1c2d;
+  margin-left: 20px;
+  border-radius: 4px;
+  font-weight: 600;
+
+
+}
+.btn-maroon:hover{
+  background-color: white;
+  color: #4b1c2d;
+  transform: translateY(-2px);
+}

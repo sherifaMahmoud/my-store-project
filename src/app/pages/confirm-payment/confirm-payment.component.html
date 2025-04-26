@@ -1,1 +1,53 @@
-<p>confirm-payment works!</p>
+<div class="order-confirmation-page" dir="rtl">
+  <div class="container mt-5">
+    <h2 class="page-title text-center mb-5 fw-bold">تفاصيل الطلب</h2>
+
+    <div class="order-items mb-5">
+      <h3 class="section-title">تفاصيل المنتجات</h3>
+
+      <div class="table-header d-flex text-center py-2 fw-bold border-bottom bg-header">
+        <div class="col">اسم المنتج</div>
+        <div class="col">سعر القطعة</div>
+        <div class="col">الكمية</div>
+        <div class="col">السعر</div>
+      </div>
+
+      <div class="item-row d-flex text-center py-2 border-bottom" *ngFor="let item of cartItems">
+        <div class="col">{{ item.title }}</div>
+        <div class="col">{{ item.price }} ج</div>
+        <div class="col">{{ item.quantity }}</div>
+        <div class="col">{{ item.totalPrice }} ج</div>
+      </div>
+    </div>
+
+    <div class="delivery-info mb-5">
+      <h3 class="section-title">معلومات التوصيل</h3>
+
+      <div class="info-row mb-2">
+        <span class="label">الاسم:</span>
+        <span class="value">{{ deliveryInfo?.fullName }}</span>
+      </div>
+      <div class="info-row mb-2">
+        <span class="label">المحافظة:</span>
+        <span class="value">{{ deliveryInfo?.governorate }}</span>
+      </div>
+      <div class="info-row mb-2">
+        <span class="label">العنوان:</span>
+        <span class="value">{{ deliveryInfo?.detailedAddress }}</span>
+      </div>
+      <div class="info-row mb-2">
+        <span class="label">رقم الهاتف:</span>
+        <span class="value">{{ deliveryInfo?.phoneNumber }}</span>
+      </div>
+      <div class="info-row mb-2" *ngIf="deliveryInfo?.additionalPhone">
+        <span class="label">رقم إضافي:</span>
+        <span class="value">{{ deliveryInfo?.additionalPhone }}</span>
+      </div>
+    </div>
+
+    <div class="action-buttons d-flex justify-content-center gap-3 mt-4">
+      <button  class="btn confirm-btn" (click)="confirmOrder()">تأكيد الطلب</button>
+      <button class="btn cancel-btn" (click)="cancelOrder()">إلغاء الطلب</button>
+    </div>
+  </div>
+</div>

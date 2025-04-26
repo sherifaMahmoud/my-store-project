@@ -7,9 +7,10 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-product-details',
   standalone: true,
+  imports: [RouterLink, CommonModule],
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css'],
-  imports: [RouterLink, CommonModule]
+
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
   product: any;
@@ -26,6 +27,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
+
     this.routeSub = this.route.params.subscribe(params => {
       const productId = params['id'];
       this.loadProductData(productId);

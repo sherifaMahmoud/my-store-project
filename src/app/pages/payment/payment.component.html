@@ -1,11 +1,12 @@
 <div class="container my-5" dir="rtl">
   <div class="row flex-row-reverse">
     <div class="col-md-6 text-center">
-      <img src="assets/images/WhatsApp Image 2025-04-21 at 13.10.46.jpeg" alt="صورة المنتج" class="img-fluid rounded">
+      <img src="assets/images/image2.png" alt="صورة المنتج" class="img-fluid rounded">
     </div>
     <div class="col-md-6">
       <h3 class="text-center mb-4">معلومات التوصيل</h3>
       <form [formGroup]="deliveryForm" (ngSubmit)="onSubmit()">
+        <!-- كل الفورم نفس اللي انتي كتباه -->
         <div class="mb-3">
           <label for="fullName" class="form-label">الاسم بالكامل</label>
           <input type="text" id="fullName" class="form-control" formControlName="fullName">
@@ -15,7 +16,7 @@
         </div>
 
         <div class="mb-3">
-          <label for="governorate" class="form-label">المحافظة </label>
+          <label for="governorate" class="form-label">المحافظة</label>
           <input type="text" id="governorate" class="form-control" formControlName="governorate">
           <div *ngIf="deliveryForm.get('governorate')?.touched && deliveryForm.get('governorate')?.invalid" class="text-danger">
             <small *ngIf="deliveryForm.get('governorate')?.errors?.['required']">هذا الحقل مطلوب</small>
@@ -23,7 +24,7 @@
         </div>
 
         <div class="mb-3">
-          <label for="detailedAddress" class="form-label">العنوان بالتفصيل </label>
+          <label for="detailedAddress" class="form-label">العنوان بالتفصيل</label>
           <input type="text" id="detailedAddress" class="form-control" formControlName="detailedAddress">
           <div *ngIf="deliveryForm.get('detailedAddress')?.touched && deliveryForm.get('detailedAddress')?.invalid" class="text-danger">
             <small *ngIf="deliveryForm.get('detailedAddress')?.errors?.['required']">هذا الحقل مطلوب</small>
@@ -31,7 +32,7 @@
         </div>
 
         <div class="mb-3">
-          <label for="phoneNumber" class="form-label">رقم الهاتف </label>
+          <label for="phoneNumber" class="form-label">رقم الهاتف</label>
           <input type="tel" id="phoneNumber" class="form-control" formControlName="phoneNumber">
           <div *ngIf="deliveryForm.get('phoneNumber')?.touched && deliveryForm.get('phoneNumber')?.invalid" class="text-danger">
             <small *ngIf="deliveryForm.get('phoneNumber')?.errors?.['required']">هذا الحقل مطلوب</small>
@@ -40,18 +41,17 @@
         </div>
 
         <div class="mb-3">
-          <label for="additionalPhone" class="form-label no-asterisk">رقم هاتف إضافي (اختياري)</label>
+          <label for="additionalPhone" >رقم هاتف إضافي (اختياري)</label>
           <input type="tel" id="additionalPhone" class="form-control" formControlName="additionalPhone">
         </div>
 
         <div class="mb-3">
-          <label for="additionalInfo" class="form-label no-asterisk">معلومات إضافية (اختياري)</label>
+          <label for="additionalInfo" >معلومات إضافية (اختياري)</label>
           <input type="text" id="additionalInfo" class="form-control" formControlName="additionalInfo">
         </div>
 
-        <button  type="submit" class="btn w-100 btn-maroon">التالي</button>
+        <button type="submit" class="btn w-100 btn-maroon">التالي</button>
       </form>
     </div>
   </div>
 </div>
-

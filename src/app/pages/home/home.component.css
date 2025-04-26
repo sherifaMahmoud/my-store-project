@@ -1,0 +1,72 @@
+.hero {
+  height: 500px;
+  background-image: url('/assets/images/image3.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center 30%;
+
+}
+
+
+.btn-maroon{
+  background-color: #4b1c2d;
+  color: white;
+  transition: all 0.3s ease;
+  border: 2px solid #4b1c2d;
+  margin-left: 20px;
+  border-radius: 4px;
+  font-weight: 600;
+
+}
+
+.btn-maroon:hover{
+  background-color: white;
+  color: #4b1c2d;
+  transform: translateY(-2px);
+}
+.card {
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background: none;
+  box-shadow: none;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+
+}
+.card-body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.card-body h5 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-body p {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-body .btn {
+  font-size: 0.8rem;
+  padding: 5px 10px;
+}
+
+.card-img-top {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  object-fit: cover;
+}
+
+.card:hover {
+  transform: translateY(20px);
+}
+.text-primary {
+  color: #4b1c2d !important;
+}

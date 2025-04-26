@@ -1,1 +1,67 @@
-<p class="py-50"> </p>
+<!-- Hero Section -->
+<div class="hero position-relative text-white text-center d-flex align-items-center justify-content-center">
+  <div class="overlay position-absolute w-100 h-100 bg-dark opacity-50"></div>
+  <div class="content position-relative">
+    <h1 class="display-4">متجر يدنين للزي الشرعي</h1>
+    <p class="lead">جميع مستلزمات الحجاب الشرعي بأفضل الأسعار وأجود الخامات</p>
+    <a routerLink="/store" class="btn btn-maroon mt-3">تسوق الآن</a>
+  </div>
+</div>
+
+<!-- Cards Section -->
+<div class="container my-5">
+  <div class="row text-center">
+    <div class="col-md-4" *ngFor="let card of cards">
+      <div class="card bg-dark text-white mb-4" [style.backgroundImage]="'url(' + card.image + ')'">
+        <div class="card-body position-relative" style="background: rgba(0,0,0,0.5);">
+          <p class="card-text">{{ card.text }}</p>
+          <a routerLink="/store" class="btn btn-maroon mt-3">تسوق الآن</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- إدناءات -->
+<section class="container">
+  <h2 class="mb-4 text-end">إدناءات</h2>
+  <div class="row">
+    <div class="col-md-3 mb-4" *ngFor="let item of ed3yat">
+      <div class="card h-100 text-center d-flex flex-column">
+        <img [src]="item.image" class="card-img-top" [alt]="item.title" style="height: 300px; object-fit: cover;">
+        <div class="card-body d-flex flex-column justify-content-between p-2">
+          <h6 class="mb-2" style="font-size: 0.9rem;">{{ item.title }}</h6>
+          <p class="text-primary mb-2" style="font-size: 0.85rem;">{{ item.price }} ج</p>
+          <div class="mt-auto">
+            <button class="btn btn-maroon btn-sm" (click)="addToCart(item)">أضف إلى السلة</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- فساتين -->
+  <h2 class="mt-5 mb-4 text-end">فساتين</h2>
+  <div class="row">
+    <div class="col-md-3 mb-4" *ngFor="let item of ed3yat">
+      <div class="card h-100 text-center d-flex flex-column">
+        <img [src]="item.image" class="card-img-top" [alt]="item.title" style="height: 300px; object-fit: cover;">
+        <div class="card-body d-flex flex-column justify-content-between p-2">
+          <h6 class="mb-2" style="font-size: 0.9rem;">{{ item.title }}</h6>
+          <p class="text-primary mb-2" style="font-size: 0.85rem;">{{ item.price }} ج</p>
+          <div class="mt-auto">
+            <button class="btn btn-maroon btn-sm">أضف إلى السلة</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- زر الذهاب للمتجر -->
+<div class="text-center my-5">
+  <a routerLink="/store" class="btn btn-maroon btn-lg px-5">الذهاب إلى المتجر</a>
+</div>

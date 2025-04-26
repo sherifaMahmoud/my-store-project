@@ -15,6 +15,8 @@ export class CartComponent implements OnInit {
   totalAmount: number = 0;
   constructor(private dataService: DataService) {}
   ngOnInit(): void {
+    window.scrollTo(0, 0);
+
     this.cartItems = this.dataService.getCartItems();
     console.log(this.cartItems);
 

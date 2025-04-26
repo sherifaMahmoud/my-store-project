@@ -1,7 +1,7 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { isPlatformBrowser } from '@angular/common';  // استيراد دالة التحقق من البيئة
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +10,16 @@ export class DataService {
 
   private cartItems = new BehaviorSubject<any[]>([]);
   private cartItemCount = new BehaviorSubject<number>(0);
-  cartCount$ = this.cartItemCount.asObservable(); // العدّاد كمراقب
+  cartCount$ = this.cartItemCount.asObservable();
 
-  constructor(private _HttpClient: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(
+    private _HttpClient: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
     const cart = this.getCartItemsFromStorage();
     if (cart) {
       this.cartItems.next(cart);
-      this.cartItemCount.next(this.getTotalCount(cart)); // نحسب عدد كل القطع مش عدد المنتجات فقط
+      this.cartItemCount.next(this.getTotalCount(cart));
     }
   }
 
@@ -37,8 +40,8 @@ export class DataService {
       updatedCart = [...this.cartItems.value, newItem];
     }
 
-    this.cartItems.next(updatedCart);  
-    this.cartItemCount.next(this.getTotalCount(updatedCart));  // تحديث العدّاد
+    this.cartItems.next(updatedCart);
+    this.cartItemCount.next(this.getTotalCount(updatedCart));
     this.setCartItemsToStorage(updatedCart);
   }
 
@@ -67,6 +70,14 @@ export class DataService {
     this.setCartItemsToStorage(updated);
   }
 
+  clearCart() {
+    this.cartItems.next([]);
+    this.cartItemCount.next(0);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem("cartItems");
+    }
+  }
+
   getNewItems(): Observable<any> {
     return this._HttpClient.get('https://fakestoreapi.com/products');
   }
@@ -87,7 +98,6 @@ export class DataService {
     return this._HttpClient.get<any[]>('https://fakestoreapi.com/products');
   }
 
-  // Storage
   private setCartItemsToStorage(cart: any[]) {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem("cartItems", JSON.stringify(cart));
@@ -102,9 +112,7 @@ export class DataService {
     return [];
   }
 
-  // 🆕 تحسب إجمالي كل الكميات
   private getTotalCount(cart: any[]): number {
     return cart.reduce((total, item) => total + item.quantity, 0);
   }
-
 }

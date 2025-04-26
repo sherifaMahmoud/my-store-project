@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { DataService } from '../core/services/data.service';
 import { CommonModule } from '@angular/common';
+import { DataService } from '../core/services/data.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -10,16 +11,22 @@ import { CommonModule } from '@angular/common';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   cartCount = 0;
+  private subscription!: Subscription;
 
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.dataService.cartCount$.subscribe(count => {
+    this.subscription = this.dataService.cartCount$.subscribe(count => {
       this.cartCount = count;
-      console.log('Current cart count:', count); // للتأكد من وصول البيانات
+      console.log('Current cart count:', count); // للتأكد إنه شغال
     });
   }
-}
 
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+}

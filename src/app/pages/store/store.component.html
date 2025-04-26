@@ -1,20 +1,84 @@
-<div class="container mx-auto row ">
+<div class="container my-4">
+  <h3 class="text-center text-maroon">أهلا بك... في متجر يدنين</h3>
+  <hr class="mx-auto" style="width: 20%;" />
 
-  @for (item of products; track item.id) {
-  <div class="col-12 col-md-6 col-lg-3">
-    <div class="card" style="width: 18rem;" >
-      <img src="{{item.image}}" tyle="width: 100px; height: auto;" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">{{item.title}}</h5>
-        <p class="card-text">{{item.description}}</p>
-        <p class="card-text">{{item.price}}</p>
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3">
+      <div class="card p-3 mb-4">
+        <h5 class="text-center text-secondary">التصنيف</h5>
+        <hr />
+        <div class="mb-3">
+          <p>رتب حسب</p>
+          <div *ngFor="let sortOption of sortOptions">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="{{sortOption}}">
+              <label class="form-check-label" for="{{sortOption}}">
+                {{sortOption}}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <p>القسم</p>
+          <div *ngFor="let category of categories">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="{{category}}">
+              <label class="form-check-label" for="{{category}}">
+                {{category}}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <p>السعر</p>
+          <div *ngFor="let price of prices">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="{{price}}">
+              <label class="form-check-label" for="{{price}}">
+                {{price}}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <p>اللون</p>
+          <div *ngFor="let color of colors">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="{{color}}">
+              <label class="form-check-label" for="{{color}}">
+                {{color}}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        <a  [routerLink]="['/product-details', item.id]" class="btn btn-maroon">عرض المنتج</a>
-        <a  (click)="addToCart(item)" class="btn btn-outline-maroon ">أضف للعربة</a>
+    <!-- Products -->
+    <div class="col-md-9">
+      <div class="row">
+        <div *ngFor="let product of visibleProducts" class="col-md-3 mb-4 d-flex">
+          <div class="card h-100 d-flex flex-column">
+            <img [src]="product.image" class="card-img-top" alt="منتج">
+            <div class="card-body text-center d-flex flex-column">
+              <h6 class="text-muted">فستان</h6>
+              <h5 class="card-title">{{product.title}}</h5>
+              <p class="price  fw-bold">{{product.price}} ج</p>
+              <div class="mt-auto">
+                <button (click)="addToCart(product)" class="btn btn-maroon w-100">أضف إلى السلة</button>
+                <a  [routerLink]="['/product-details', product.id]" class="btn btn-outline-maroon">عرض المنتج</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
       </div>
-  </div>
 
+      <div class="text-center my-3" *ngIf="visibleProducts.length < products.length">
+        <button class="btn btn-outline-maroon" (click)="loadMore()">عرض المزيد</button>
+      </div>
+    </div>
   </div>
-  }
-  </div>
+</div>
