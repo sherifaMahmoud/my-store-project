@@ -41,4 +41,14 @@ export class CartComponent implements OnInit {
       this.totalAmount +=i.totalPrice;
     })
   }
+  clearAllCart() {
+    this.dataService.clearCart();
+    this.cartItems = [];
+    this.totalAmount = 0;
+  }
+  removeFromCart(item: any): void {
+    this.dataService.removeFromCart(item);
+    this.updateItems();
+  }
+
 }

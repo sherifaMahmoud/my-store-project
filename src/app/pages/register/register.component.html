@@ -1,17 +1,15 @@
 <div class="container min-vh-100 d-flex align-items-center justify-content-center">
   <div class="row w-100 flex-md-row-reverse align-items-start">
-
-    <div class="col-md-6 text-center mb-4 mb-md-0 d-flex justify-content-center">
-      <img src="assets/images/loging.png" alt="تسجيل الدخول" class="img-fluid" style="max-width: 400px; height: 600px;">
+    <div class="col-md-6 text-center mb-4 d-flex justify-content-center">
+      <img src="assets/images/11.png" alt="إنشاء حساب" class="img-fluid" style="max-width: 350px;">
     </div>
 
     <div class="col-md-6 d-flex flex-column align-items-end">
-
-      <h2 class="mt-0 mb-4 ms-auto logo-font" style="color: #5D1037;">تسجيل الدخول</h2>
+      <h2 class="mt-0 mb-4 ms-auto logo-font" style="color: #5D1037;">إنشاء حساب</h2>
 
       <div class="d-flex align-items-center mb-4 w-75 justify-content-center">
         <div style="width: 50px; height: 2px; background-color: #5D1037;"></div>
-        <p class="mx-2 mb-0">تسجيل الدخول من خلال</p>
+        <p class="mx-2 mb-0">إنشاء حساب من خلال</p>
         <div style="width: 50px; height: 2px; background-color: #5D1037;"></div>
       </div>
 
@@ -21,24 +19,32 @@
         <button class="btn btn-outline-primary rounded-2 px-3"><i class="fab fa-twitter"></i></button>
       </div>
 
-      <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)" novalidate class="w-75">
-
+      <form [formGroup]="registerForm" (ngSubmit)="register()" class="w-75" novalidate>
         <div class="mb-3">
           <input
             type="text"
-            formControlName="username"
             class="form-control text-end"
             placeholder="اسم المستخدم"
-            [class.is-invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+            formControlName="username"
+            [class.is-invalid]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+        </div>
+
+        <div class="mb-3">
+          <input
+            type="email"
+            class="form-control text-end"
+            placeholder="البريد الإلكتروني"
+            formControlName="email"
+            [class.is-invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
         </div>
 
         <div class="mb-3">
           <input
             type="password"
-            formControlName="password"
             class="form-control text-end"
             placeholder="كلمة السر"
-            [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+            formControlName="password"
+            [class.is-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
         </div>
 
         <div class="form-check d-flex align-items-center justify-content-start mb-3">
@@ -46,16 +52,15 @@
           <input type="checkbox" class="form-check-input" id="rememberMe">
         </div>
 
-        <button type="submit" class="btn btn-outline-maroon w-100 " [disabled]="loginForm.invalid">
-          تسجيل الدخول
+        <button type="submit" class="btn btn-outline-maroon w-100 " [disabled]="registerForm.invalid" >
+          إنشاء الحساب
         </button>
       </form>
 
       <div class="text-end mt-4 w-75">
-        <span>ليس لديك حساب؟</span>
-        <a routerLink="/register" style="color: #5D1037; font-weight: bold;">إنشاء حساب</a>
+        <span>هل لديك حساب بالفعل؟</span>
+        <a routerLink="/login" style="color: #5D1037; font-weight: bold;">تسجيل الدخول</a>
       </div>
     </div>
-
   </div>
 </div>

@@ -39,3 +39,16 @@
   color: #4b1c2d;
   transform: translateY(-2px);
 }
+.btn-outline-maroon {
+  border: 2px solid #4b1c2d;
+  color: #4b1c2d;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-maroon:hover {
+  background-color: #4b1c2d;
+  color: white;
+  transform: translateY(-2px);
+}

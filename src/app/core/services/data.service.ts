@@ -11,6 +11,7 @@ export class DataService {
   private cartItems = new BehaviorSubject<any[]>([]);
   private cartItemCount = new BehaviorSubject<number>(0);
   cartCount$ = this.cartItemCount.asObservable();
+  isLogined = new BehaviorSubject<boolean>(false);
 
   constructor(
     private _HttpClient: HttpClient,
@@ -115,4 +116,8 @@ export class DataService {
   private getTotalCount(cart: any[]): number {
     return cart.reduce((total, item) => total + item.quantity, 0);
   }
+  registerUser(data: any): Observable<any> {
+    return this._HttpClient.post('https://dummyjson.com/users/add', data);
+  }
+
 }

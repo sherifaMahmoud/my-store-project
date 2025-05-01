@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+
 :root {
   --mainColor : #4a1e2c;
   --whiteColor : white;
 }
 body {
 margin: 0;
-font-family: Roboto, "Helvetica Neue", sans-serif;
+font-family: 'Cairo', sans-serif !important;
 direction: rtl;
 padding-top: 40px;
 
@@ -16,4 +18,13 @@ background-color : var(--mainColor);
 
 .whiteColor{
   color: var(--whiteColor) !important;
+}
+@font-face {
+  font-family: 'VLAX B';
+  src: url('assets/images/fonts/vlax-b.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+.logo-font {
+  font-family: 'VLAX B', sans-serif !important;
 }

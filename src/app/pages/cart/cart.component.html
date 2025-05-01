@@ -31,7 +31,7 @@
             </td>
             <td class="align-middle text-right">{{ item.totalPrice | number:'1.2-2' }} جنيه</td>
             <td class="align-middle text-center">
-              <button class="btn btn-sm btn-danger" (click)="removeItem(item)">
+              <button class="btn btn-sm btn-danger" (click)="removeFromCart(item)">
                 <i class="fas fa-trash-alt"></i>
               </button>
             </td>
@@ -53,6 +53,10 @@
             <button routerLink="/payment" class="btn btn-maroon btn-block mt-3">
               إتمام الشراء
             </button>
+            <button class="btn btn-outline-maroon btn-block mt-3" (click)="clearAllCart()">
+              مسح كل السلة
+            </button>
+
           </div>
         </div>
       </div>
