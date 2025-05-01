@@ -97,6 +97,8 @@ export class DataService {
   registerUser(data: any): Observable<any> {
     return this._HttpClient.post('https://dummyjson.com/users/add', data);
   }
+
+
   getAllProducts(): Observable<any[]> {
     return this._HttpClient.get<any[]>('https://fakestoreapi.com/products');
   }
@@ -118,6 +120,7 @@ export class DataService {
   private getTotalCount(cart: any[]): number {
     return cart.reduce((total, item) => total + item.quantity, 0);
   }
+
 
 
 }

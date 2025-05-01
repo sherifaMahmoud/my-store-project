@@ -13,8 +13,8 @@ import { CommonModule } from '@angular/common';
 })
 export class HomeComponent implements OnInit {
   cards: any[] = [];
-  ed3yat: any[] = [];
-  fustanat: any[] = [];
+  ednaa: any[] = [];
+  fustan: any[] = [];
 
   constructor(private dataService: DataService) {}
 
@@ -36,8 +36,8 @@ export class HomeComponent implements OnInit {
         }
       ];
 
-      this.ed3yat = items.slice(0, 6);   // أول 6 منتجات إدناءات
-      this.fustanat = items.slice(6, 12); // بعدهم 6 منتجات فساتين
+      this.ednaa = items.slice(0, 6);
+      this.fustan = items.slice(6, 12);
     });
   }
 
