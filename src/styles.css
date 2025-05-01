@@ -28,3 +28,6 @@ background-color : var(--mainColor);
 .logo-font {
   font-family: 'VLAX B', sans-serif !important;
 }
+body, h1, h2, h3, h4, h5, h6, p, span, a, div, button, input, label {
+  font-family: 'Cairo', sans-serif !important;
+}

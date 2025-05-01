@@ -36,13 +36,16 @@
 
       <h4 class="text-maroon fw-bold">{{ product?.price }} ج.م</h4>
 
-      <button class="btn btn-outline-maroon me-2" (click)="addToCart()">
-        <i class="fa-solid fa-cart-plus ms-1"></i> أضف إلى السلة
-      </button>
+      <div class="d-flex gap-2 flex-wrap">
+        <button class="btn btn-outline-maroon" (click)="addToCart()">
+          <i class="fa-solid fa-cart-plus ms-1"></i> أضف إلى السلة
+        </button>
 
-      <button routerLink="/payment" class="btn btn-maroon ">
-        إتمام الشراء
-      </button>
+        <button routerLink="/payment" class="btn btn-maroon">
+          إتمام الشراء
+        </button>
+      </div>
+
     </div>
   </div>
 
