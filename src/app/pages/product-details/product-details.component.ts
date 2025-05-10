@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
 export class ProductDetailsComponent implements OnInit, OnDestroy {
   product: any;
   relatedProducts: any[] = [];
-  groupedRelatedProducts: any[][] = []; // ⭐ جديد
+  groupedRelatedProducts: any[][] = []; 
   private routeSub!: Subscription;
   isTruncated: boolean = true;
   maxDescriptionLength: number = 100;

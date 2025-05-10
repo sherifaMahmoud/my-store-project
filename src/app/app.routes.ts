@@ -9,6 +9,7 @@ import { PaymentComponent } from './pages/payment/payment.component';
 import { ConfirmPaymentComponent } from './pages/confirm-payment/confirm-payment.component';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 
+
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },

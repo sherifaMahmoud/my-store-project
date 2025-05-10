@@ -80,27 +80,24 @@ export class DataService {
   }
 
   getNewItems(): Observable<any> {
-    return this._HttpClient.get('https://fakestoreapi.com/products');
-  }
-
-  searchItems(query: string): Observable<any> {
-    return this._HttpClient.get(`https://fakestoreapi.com/search/${query}`);
+    return this._HttpClient.get('http://localhost:7248/api/Products');
   }
 
   viewItemDetails(id: number): Observable<any> {
-    return this._HttpClient.get(`https://fakestoreapi.com/products/${id}`);
+    return this._HttpClient.get(`http://localhost:7248/api/Products/${id}`);
   }
 
   loginUser(data: any): Observable<any> {
-    return this._HttpClient.post('https://dummyjson.com/user/login', data);
+    return this._HttpClient.post('https://fatmaessa-001-site1.anytempurl.com/api/Account/Login', data);
   }
+
   registerUser(data: any): Observable<any> {
-    return this._HttpClient.post('https://dummyjson.com/users/add', data);
+    return this._HttpClient.post('https://fatmaessa-001-site1.anytempurl.com/api/Account/Register', data);
   }
 
 
   getAllProducts(): Observable<any[]> {
-    return this._HttpClient.get<any[]>('https://fakestoreapi.com/products');
+    return this._HttpClient.get<any[]>('http://localhost:7248/api/Products');
   }
 
   private setCartItemsToStorage(cart: any[]) {

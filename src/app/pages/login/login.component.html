@@ -21,15 +21,15 @@
         <button class="btn btn-outline-primary rounded-2 px-3"><i class="fab fa-twitter"></i></button>
       </div>
 
-      <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)" novalidate class="w-75">
+      <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
 
         <div class="mb-3">
           <input
             type="text"
-            formControlName="username"
+            formControlName="userName"
             class="form-control text-end"
             placeholder="اسم المستخدم"
-            [class.is-invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+            [class.is-invalid]="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched">
         </div>
 
         <div class="mb-3">
