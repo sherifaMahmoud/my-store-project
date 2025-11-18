@@ -1,6 +1,11 @@
- import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { DataService } from '../../core/services/data.service';
 
@@ -9,7 +14,7 @@ import { DataService } from '../../core/services/data.service';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
   registerForm: FormGroup;
@@ -50,7 +55,7 @@ export class RegisterComponent {
       error: (err) => {
         console.error('❌ Register Error:', err);
         alert('❌ حدث خطأ في الاتصال بالسيرفر.');
-      }
+      },
     });
   }
 }

@@ -13,7 +13,7 @@
       </div>
 
       <div class="item-row d-flex text-center py-2 border-bottom" *ngFor="let item of cartItems">
-        <div class="col">{{ item.title }}</div>
+        <div class="col">{{ item.name }}</div>
         <div class="col">{{ item.price }} ج</div>
         <div class="col">{{ item.quantity }}</div>
         <div class="col">{{ item.totalPrice }} ج</div>
@@ -49,5 +49,9 @@
       <button  class="btn confirm-btn" (click)="confirmOrder()">تأكيد الطلب</button>
       <button class="btn cancel-btn" (click)="cancelOrder()">إلغاء الطلب</button>
     </div>
+    <div *ngIf="message" class="alert alert-info text-center mt-3">
+  {{ message }}
+</div>
+
   </div>
 </div>

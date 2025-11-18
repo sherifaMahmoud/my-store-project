@@ -1,14 +1,12 @@
 .hero {
   height: 500px;
-  background-image: url('/assets/images/image3.png');
+  background-image: url("/assets/images/image3.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center 30%;
-
 }
 
-
-.btn-maroon{
+.btn-maroon {
   background-color: #4b1c2d;
   color: white;
   transition: all 0.3s ease;
@@ -16,10 +14,9 @@
   margin-left: 20px;
   border-radius: 4px;
   font-weight: 600;
-
 }
 
-.btn-maroon:hover{
+.btn-maroon:hover {
   background-color: white;
   color: #4b1c2d;
   transform: translateY(-2px);
@@ -35,7 +32,6 @@
   box-shadow: none;
   transition: all 0.3s ease;
   border-radius: 8px;
-
 }
 .card-body {
   height: 100%;
@@ -69,4 +65,8 @@
 }
 .text-primary {
   color: #4b1c2d !important;
+}
+.coloor {
+  color: #4b1c2d;
+  font-size: 7rem;
 }

@@ -19,7 +19,7 @@
   box-shadow: none;
   border-color: #5D1037;
 }
-.btn-outline-maroon {
+.btn-maroon {
   border: 2px solid #4b1c2d;
   color: #4b1c2d;
   font-weight: 600;
@@ -27,7 +27,7 @@
   transition: all 0.3s ease;
 }
 
-.btn-outline-maroon:hover {
+.btn-maroon:hover {
   background-color: #4b1c2d;
   color: white;
   transform: translateY(-2px);

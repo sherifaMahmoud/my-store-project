@@ -4,13 +4,13 @@ import { Subscription } from 'rxjs';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { ProductService } from '../core/services/product.service';
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [RouterLink, RouterLinkActive, CommonModule, FormsModule],
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   cartCount = 0;
@@ -22,13 +22,28 @@ export class NavbarComponent implements OnInit, OnDestroy {
   filteredProducts: string[] = [];
   isMobileView = false; // متغير جديد لتحديد وضع الجوال
 
-  constructor(private dataService: DataService, private router: Router) {}
+  constructor(
+    private dataService: DataService,
+    private router: Router,
+    private productService: ProductService
+  ) {}
+
+  products: any[] = [];
 
   ngOnInit(): void {
-    this.subscription = this.dataService.cartCount$.subscribe(count => {
-      this.cartCount = count;
-    });
-    this.checkViewport(); // التحقق من حجم الشاشة عند التهيئة
+    // this.subscription = this.dataService.cartCount$.subscribe(count => {
+    //   this.cartCount = count;
+    // });
+    // this.productService.getProducts().subscribe(
+    //   (products) => {
+    //     this.products = products;
+    //     this.filteredProducts = [...products]; // نعرضهم مبدئياً
+    //   },
+    //   (error) => {
+    //     console.error('حدث خطأ أثناء جلب المنتجات:', error);
+    //   }
+    // );
+    // this.checkViewport();
   }
 
   ngOnDestroy(): void {
@@ -59,11 +74,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
       }
     }
   }
+  filterProducts() {
+    if (!this.searchQuery) {
+      this.filteredProducts = [...this.products];
+      return;
+    }
 
-  onSearch() {
-    const query = this.searchQuery.trim().toLowerCase();
-    this.filteredProducts = this.allProducts.filter(p =>
-      p.toLowerCase().includes(query)
+    const search = this.searchQuery.toLowerCase();
+    this.filteredProducts = this.products.filter(
+      (product) =>
+        (product.name && product.name.toLowerCase().includes(search)) ||
+        (product.description &&
+          product.description.toLowerCase().includes(search))
     );
   }
 

@@ -8,21 +8,27 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [RouterLink, CommonModule],
   templateUrl: './cart.component.html',
-  styleUrl: './cart.component.css'
+  styleUrl: './cart.component.css',
 })
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
   totalAmount: number = 0;
+
   constructor(private dataService: DataService) {}
+
   ngOnInit(): void {
     window.scrollTo(0, 0);
 
+    // جلب العناصر من الخدمة
     this.cartItems = this.dataService.getCartItems();
-    console.log(this.cartItems);
 
-    this.cartItems.map((i) =>{
-      this.totalAmount +=i.totalPrice;
-    })
+    // طباعة البيانات في الكونسول للتحقق من وجود العناصر
+    console.log(this.cartItems); // تحقق من أن cartItems ليست فارغة
+
+    // حساب المبلغ الإجمالي
+    this.cartItems.map((i) => {
+      this.totalAmount += i.totalPrice;
+    });
   }
 
   additemToCart(item: any) {
@@ -30,25 +36,28 @@ export class CartComponent implements OnInit {
     this.totalAmount = 0;
     this.updateItems();
   }
+
   removeItem(item: any): void {
     this.dataService.removeItemFromCart(item);
     this.updateItems();
   }
+
   updateItems() {
     this.cartItems = this.dataService.getCartItems();
-    this.totalAmount =0 ;
-    this.cartItems.map((i) =>{
-      this.totalAmount +=i.totalPrice;
-    })
+    this.totalAmount = 0;
+    this.cartItems.map((i) => {
+      this.totalAmount += i.totalPrice;
+    });
   }
+
   clearAllCart() {
     this.dataService.clearCart();
     this.cartItems = [];
     this.totalAmount = 0;
   }
+
   removeFromCart(item: any): void {
     this.dataService.removeFromCart(item);
     this.updateItems();
   }
-
 }

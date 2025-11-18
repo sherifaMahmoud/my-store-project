@@ -1,4 +1,3 @@
-
 <div class="container mt-5">
   <div *ngIf="cartItems.length > 0; else emptyCart">
     <h2 class="mb-4 text-right">🛒 سلة المشتريات</h2>
@@ -18,9 +17,9 @@
         <tbody>
           <tr *ngFor="let item of cartItems">
             <td class="align-middle">
-              <img src="{{item.image}}" class="img-thumbnail" style="max-width: 80px;">
+              <img src="{{item.imageUrl}}" class="img-thumbnail" style="max-width: 80px;">
             </td>
-            <td class="align-middle text-right">{{ item.title }}</td>
+            <td class="align-middle text-right">{{ item.name }}</td>
             <td class="align-middle text-right">{{ item.price }} جنيه</td>
             <td class="align-middle">
               <div class="d-flex justify-content-center align-items-center">

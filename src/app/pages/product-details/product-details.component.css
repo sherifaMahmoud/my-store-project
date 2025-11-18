@@ -154,3 +154,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.bg-maroon{
+  background-color: #4b1c2d;
+}

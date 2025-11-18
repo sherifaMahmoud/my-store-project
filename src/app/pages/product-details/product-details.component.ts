@@ -10,12 +10,11 @@ import { Subscription } from 'rxjs';
   imports: [RouterLink, CommonModule],
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css'],
-
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
   product: any;
   relatedProducts: any[] = [];
-  groupedRelatedProducts: any[][] = []; 
+  groupedRelatedProducts: any[][] = [];
   private routeSub!: Subscription;
   isTruncated: boolean = true;
   maxDescriptionLength: number = 100;
@@ -29,26 +28,34 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     window.scrollTo(0, 0);
 
-    this.routeSub = this.route.params.subscribe(params => {
+    this.routeSub = this.route.params.subscribe((params) => {
       const productId = params['id'];
-      this.loadProductData(productId);
+      if (productId && !isNaN(productId)) {
+        this.loadProductData(productId);
+      } else {
+        console.error('Product ID is invalid or missing in the route');
+      }
     });
   }
 
   loadProductData(productId: string | number): void {
-    const id = typeof productId === 'string' ? parseInt(productId, 10) : productId;
+    const id =
+      typeof productId === 'string' ? parseInt(productId, 10) : productId;
 
     this.dataService.viewItemDetails(id).subscribe({
       next: (data) => {
-        console.log('بيانات المنتج:', data);
         this.product = data;
 
-        this.dataService.getAllProducts().subscribe(products => {
+        this.dataService.getAllProducts().subscribe((products) => {
           this.relatedProducts = products
-            .filter(p => p.category === this.product?.category && p.id !== this.product?.id)
-            .slice(0, 9); // ⭐ خليهم 9 عشان كل سلايد فيه 3 منتجات
+            .filter((p) => p.productId !== this.product.productId)
+            .sort(() => 0.5 - Math.random())
+            .slice(0, 6);
 
-          this.groupedRelatedProducts = this.chunkArray(this.relatedProducts, 3); // ⭐ اقسمهم مجموعات
+          this.groupedRelatedProducts = this.chunkArray(
+            this.relatedProducts,
+            3
+          );
           this.cdr.detectChanges();
         });
 
@@ -56,11 +63,11 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       },
       error: (err) => {
         console.error('خطأ أثناء جلب بيانات المنتج:', err);
-      }
+      },
     });
   }
 
-  // ⭐ دالة تقسيم المنتجات كل 3 مع بعض
+  // تقسيم المنتجات كل 3 عناصر لعرضها في الكاروسيل
   chunkArray(array: any[], chunkSize: number): any[][] {
     const result = [];
     for (let i = 0; i < array.length; i += chunkSize) {
@@ -71,7 +78,10 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   get truncatedDescription() {
     if (this.product?.description) {
-      if (this.product.description.length > this.maxDescriptionLength && this.isTruncated) {
+      if (
+        this.product.description.length > this.maxDescriptionLength &&
+        this.isTruncated
+      ) {
         return this.product.description.substring(0, this.maxDescriptionLength);
       }
       return this.product.description;
