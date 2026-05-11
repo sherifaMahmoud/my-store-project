@@ -59,7 +59,8 @@ export class LoginComponent implements AfterViewInit {
           this.dataService.isLogined.next(true);
 
           if (data.role === 'admin') {
-            this._Router.navigate(['/home']); // أو أي route تاني عندك
+            const token = localStorage.getItem('token');
+            window.location.href = `https://adminpanelyodneen.vercel.app/?token=${token}`;
           } else {
             this._Router.navigate(['/home']);
           }
