@@ -2,7 +2,7 @@ import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
-
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
@@ -75,14 +75,13 @@ export class DataService {
   // ============ Authentication Methods ============
   loginUser(data: any): Observable<any> {
     return this._HttpClient.post(
-      'http://localhost:5095/api/Account/Login',
-      data
+      `${environment.apiUrl}/api/Account/Login`,data
     );
   }
 
   registerUser(data: any): Observable<any> {
     return this._HttpClient.post(
-      'http://localhost:5095/api/Account/Register',
+      `${environment.apiUrl}/api/Account/Register`,
       data
     );
   }
@@ -94,35 +93,35 @@ export class DataService {
 
   // ============ Protected API Calls ============
   getNewItems(): Observable<any> {
-    return this._HttpClient.get('http://localhost:5095/api/Products', {
+    return this._HttpClient.get(`${environment.apiUrl}/api/Products`, {
       headers: this.getAuthHeaders(),
     });
   }
   getOffers() {
-    return this._HttpClient.get<any[]>('http://localhost:5095/api/Offers');
+    return this._HttpClient.get<any[]>(`${environment.apiUrl}/api/Offers`);
   }
 
   getProductById(productId: number) {
     return this._HttpClient.get<any>(
-      `http://localhost:5095/api/Products/${productId}`
+      `${environment.apiUrl}/api/Products/${productId}`
     );
   }
 
   viewItemDetails(id: any): Observable<any> {
-    return this._HttpClient.get(`http://localhost:5095/api/Products/${id}`, {
+    return this._HttpClient.get(`${ environment.apiUrl }/api/Products/${id}`, {
       headers: this.getAuthHeaders(),
     });
   }
 
   getAllProducts(): Observable<any[]> {
-    return this._HttpClient.get<any[]>('http://localhost:5095/api/Products', {
+    return this._HttpClient.get<any[]>(`${environment.apiUrl}/api/Products`, {
       headers: this.getAuthHeaders(),
     });
   }
 
   searchProducts(query: string): Observable<any[]> {
     return this._HttpClient.get<any[]>(
-      `http://localhost:5000/api/products/search?query=${query}`,
+      `${ environment.apiUrl }/api/products/search?query=${query}`,
       {
         headers: this.getAuthHeaders(),
       }
@@ -134,30 +133,12 @@ export class DataService {
     return this.cartItems.value;
   }
 
-  // addToCart(item: any) {
-  //   const foundItem = this.cartItems.value.find(p => p.productId === item.productId);
-  //   let updatedCart;
-
-  //   if (foundItem) {
-  //     foundItem.quantity += 1;
-  //     foundItem.totalPrice = item.price * foundItem.quantity;
-  //     updatedCart = [...this.cartItems.value];
-  //   } else {
-  //     const newItem = { ...item, quantity: 1, totalPrice: item.price };
-  //     updatedCart = [...this.cartItems.value, newItem];
-  //   }
-
-  //   this.cartItems.next(updatedCart);
-  //   this.cartItemCount.next(this.getTotalCount(updatedCart));
-  //   this.setCartItemsToStorage(updatedCart);
-  // }
   addToCart(item: any) {
     const foundItem = this.cartItems.value.find(
       (p) => p.productId === item.productId
     );
     let updatedCart;
 
-    // حساب السعر بعد الخصم إذا كان موجودًا
     const priceAfterDiscount = item.discount
       ? item.price - (item.price * item.discount) / 100
       : item.price;
@@ -216,12 +197,12 @@ export class DataService {
   }
   // ============ Orders ============
   saveOrder(order: any): Observable<any> {
-    return this._HttpClient.post('http://localhost:5095/api/Order', order, {
+    return this._HttpClient.post(`${environment.apiUrl}/api/Order`, order, {
       headers: this.getAuthHeaders(),
     });
   }
   placeOrder(order: any): Observable<any> {
-    return this._HttpClient.post('http://localhost:5095/api/Order', order, {
+    return this._HttpClient.post(`${environment.apiUrl}/api/Order`, order, {
       headers: this.getAuthHeaders(),
     });
   }

@@ -44,8 +44,7 @@ export class LoginComponent implements AfterViewInit {
 
   login() {
     if (this.loginForm.invalid) {
-      this.errorMessage =
-        'يرجى التأكد من إدخال اسم المستخدم وكلمة المرور بشكل صحيح.';
+      this.errorMessage = 'يرجى التأكد من إدخال اسم المستخدم وكلمة المرور بشكل صحيح.';
       return;
     }
 
@@ -58,18 +57,9 @@ export class LoginComponent implements AfterViewInit {
         if (data.message === 'Login successful') {
           this.dataService.setToken(data.token, data.role);
           this.dataService.isLogined.next(true);
-          console.log('✅ Token stored:', localStorage.getItem('token'));
-          console.log('✅ Role stored:', localStorage.getItem('role'));
 
           if (data.role === 'admin') {
-            try {
-              const token = localStorage.getItem('token');
-              window.location.href = `http://localhost:53127/products?token=${token}`;
-            } catch (error) {
-              console.error('❌ فشل إعادة التوجيه:', error);
-              this.errorMessage =
-                'تعذر الوصول إلى صفحة الأدمن. تأكد من تشغيل التطبيق.';
-            }
+            this._Router.navigate(['/home']); // أو أي route تاني عندك
           } else {
             this._Router.navigate(['/home']);
           }
@@ -80,19 +70,8 @@ export class LoginComponent implements AfterViewInit {
       error: (err) => {
         this.isLoading = false;
         console.error('❌ Login failed:', err);
-        this.errorMessage =
-          'حدث خطأ في الاتصال بالسيرفر. تحقق من أن الـ API يعمل.';
+        this.errorMessage = 'حدث خطأ في الاتصال بالسيرفر. تحقق من أن الـ API يعمل.';
       },
-    });
-  }
-
-  checkLoginStatus() {
-    const token = this.dataService.getToken();
-    const isAdmin = this.dataService.isAdmin();
-    console.log('Is token stored?', token ? 'Yes' : 'No');
-    console.log('Is admin logged in?', isAdmin ? 'Yes' : 'No');
-    this.dataService.isLogined.subscribe((isLoggedIn) => {
-      console.log('Is user logged in?', isLoggedIn);
     });
   }
 
@@ -110,11 +89,22 @@ export class LoginComponent implements AfterViewInit {
       ScrollReveal().reveal('.reveal-from-bottom', {
         reset: true,
         delay: 100,
-        distance: '__)px',
+        distance: '50px', // ✅ اتصلحت
         duration: 1000,
         origin: 'bottom',
         easing: 'ease-in-out',
       });
     }
   }
+
+  checkLoginStatus() {
+    const token = this.dataService.getToken();
+    const isAdmin = this.dataService.isAdmin();
+    console.log('Is token stored?', token ? 'Yes' : 'No');
+    console.log('Is admin logged in?', isAdmin ? 'Yes' : 'No');
+    this.dataService.isLogined.subscribe((isLoggedIn) => {
+      console.log('Is user logged in?', isLoggedIn);
+    });
+  }
+
 }
