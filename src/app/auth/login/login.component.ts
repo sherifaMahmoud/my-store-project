@@ -59,8 +59,11 @@ export class LoginComponent implements AfterViewInit {
           this.dataService.isLogined.next(true);
 
           if (data.role === 'admin') {
-            const token = localStorage.getItem('token');
-            window.location.href = `https://adminpanelyodneen.vercel.app/?token=${token}`;
+            // ✅ حطيها جوه isPlatformBrowser
+            if (isPlatformBrowser(this.platformId)) {
+              const token = localStorage.getItem('token');
+              window.location.href = `https://adminpanelyodneen.vercel.app/?token=${token}`;
+            }
           } else {
             this._Router.navigate(['/home']);
           }
