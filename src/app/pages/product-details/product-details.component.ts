@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { DataService } from '../../core/services/data.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -22,84 +23,53 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private dataService: DataService,
     private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef
-  ) {}
+    private cdr: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) { }
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
-
+    if (isPlatformBrowser(this.platformId)) window.scrollTo(0, 0);
     this.routeSub = this.route.params.subscribe((params) => {
       const productId = params['id'];
-      if (productId && !isNaN(productId)) {
-        this.loadProductData(productId);
-      } else {
-        console.error('Product ID is invalid or missing in the route');
-      }
+      if (productId && !isNaN(productId)) this.loadProductData(productId);
     });
   }
 
   loadProductData(productId: string | number): void {
-    const id =
-      typeof productId === 'string' ? parseInt(productId, 10) : productId;
-
+    const id = typeof productId === 'string' ? parseInt(productId, 10) : productId;
     this.dataService.viewItemDetails(id).subscribe({
       next: (data) => {
         this.product = data;
-
         this.dataService.getAllProducts().subscribe((products) => {
           this.relatedProducts = products
             .filter((p) => p.productId !== this.product.productId)
             .sort(() => 0.5 - Math.random())
             .slice(0, 6);
-
-          this.groupedRelatedProducts = this.chunkArray(
-            this.relatedProducts,
-            3
-          );
+          this.groupedRelatedProducts = this.chunkArray(this.relatedProducts, 3);
           this.cdr.detectChanges();
         });
-
-        window.scrollTo(0, 0);
+        if (isPlatformBrowser(this.platformId)) window.scrollTo(0, 0);
       },
-      error: (err) => {
-        console.error('خطأ أثناء جلب بيانات المنتج:', err);
-      },
+      error: (err) => console.error('خطأ أثناء جلب بيانات المنتج:', err),
     });
   }
 
-  // تقسيم المنتجات كل 3 عناصر لعرضها في الكاروسيل
   chunkArray(array: any[], chunkSize: number): any[][] {
     const result = [];
-    for (let i = 0; i < array.length; i += chunkSize) {
-      result.push(array.slice(i, i + chunkSize));
-    }
+    for (let i = 0; i < array.length; i += chunkSize) result.push(array.slice(i, i + chunkSize));
     return result;
   }
 
   get truncatedDescription() {
     if (this.product?.description) {
-      if (
-        this.product.description.length > this.maxDescriptionLength &&
-        this.isTruncated
-      ) {
+      if (this.product.description.length > this.maxDescriptionLength && this.isTruncated)
         return this.product.description.substring(0, this.maxDescriptionLength);
-      }
       return this.product.description;
     }
     return '';
   }
 
-  toggleDescription() {
-    this.isTruncated = !this.isTruncated;
-  }
-
-  addToCart(): void {
-    this.dataService.addToCart(this.product);
-  }
-
-  ngOnDestroy(): void {
-    if (this.routeSub) {
-      this.routeSub.unsubscribe();
-    }
-  }
+  toggleDescription() { this.isTruncated = !this.isTruncated; }
+  addToCart(): void { this.dataService.addToCart(this.product); }
+  ngOnDestroy(): void { this.routeSub?.unsubscribe(); }
 }
