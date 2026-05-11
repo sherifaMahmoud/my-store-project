@@ -1,10 +1,12 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { DataService } from '../core/services/data.service';
 import { Subscription } from 'rxjs';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../core/services/product.service';
+
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -20,30 +22,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
   searchQuery = '';
   allProducts: string[] = ['خمار', 'إدناء', 'فستان', 'نقاب', 'إكسسوار'];
   filteredProducts: string[] = [];
-  isMobileView = false; // متغير جديد لتحديد وضع الجوال
+  isMobileView = false;
+  products: any[] = [];
 
   constructor(
     private dataService: DataService,
     private router: Router,
-    private productService: ProductService
-  ) {}
-
-  products: any[] = [];
+    private productService: ProductService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) { }
 
   ngOnInit(): void {
-    // this.subscription = this.dataService.cartCount$.subscribe(count => {
-    //   this.cartCount = count;
-    // });
-    // this.productService.getProducts().subscribe(
-    //   (products) => {
-    //     this.products = products;
-    //     this.filteredProducts = [...products]; // نعرضهم مبدئياً
-    //   },
-    //   (error) => {
-    //     console.error('حدث خطأ أثناء جلب المنتجات:', error);
-    //   }
-    // );
-    // this.checkViewport();
+    this.checkViewport();
   }
 
   ngOnDestroy(): void {
@@ -52,28 +42,32 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   @HostListener('window:resize', ['$event'])
   onResize() {
-    this.checkViewport(); // التحقق من حجم الشاشة عند تغيير الحجم
+    this.checkViewport();
   }
 
   checkViewport() {
-    this.isMobileView = window.innerWidth < 992; // Bootstrap lg breakpoint
-    if (!this.isMobileView) {
-      this.showSearch = false; // إخفاء البحث عند التوسيع لشاشة كبيرة
-      this.searchQuery = '';
-      this.filteredProducts = [];
-    }
-  }
-
-  toggleSearch() {
-    // إذا كان في وضع الجوال أو في شاشة كبيرة
-    if (this.isMobileView || window.innerWidth >= 992) {
-      this.showSearch = !this.showSearch;
-      if (!this.showSearch) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.isMobileView = window.innerWidth < 992;
+      if (!this.isMobileView) {
+        this.showSearch = false;
         this.searchQuery = '';
         this.filteredProducts = [];
       }
     }
   }
+
+  toggleSearch() {
+    if (isPlatformBrowser(this.platformId)) {
+      if (this.isMobileView || window.innerWidth >= 992) {
+        this.showSearch = !this.showSearch;
+        if (!this.showSearch) {
+          this.searchQuery = '';
+          this.filteredProducts = [];
+        }
+      }
+    }
+  }
+
   filterProducts() {
     if (!this.searchQuery) {
       this.filteredProducts = [...this.products];
@@ -84,8 +78,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.filteredProducts = this.products.filter(
       (product) =>
         (product.name && product.name.toLowerCase().includes(search)) ||
-        (product.description &&
-          product.description.toLowerCase().includes(search))
+        (product.description && product.description.toLowerCase().includes(search))
     );
   }
 
@@ -97,9 +90,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   closeNavbar() {
-    const navbar = document.getElementById('navbarCollapse');
-    if (navbar?.classList.contains('show')) {
-      navbar.classList.remove('show');
+    if (isPlatformBrowser(this.platformId)) {
+      const navbar = document.getElementById('navbarCollapse');
+      if (navbar?.classList.contains('show')) {
+        navbar.classList.remove('show');
+      }
     }
   }
 }
