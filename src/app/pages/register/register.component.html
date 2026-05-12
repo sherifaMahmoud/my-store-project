@@ -1,69 +1,50 @@
-<div class="container min-vh-100 d-flex align-items-center justify-content-center">
-  <div class="row w-100 flex-md-row-reverse align-items-start">
+<!-- register.component.html -->
+<div class="register-page">
+  <div class="background-overlay"></div>
 
-    <!-- صورة إنشاء حساب -->
-    <div class="col-md-6 text-center mb-4 mb-md-0 d-flex justify-content-center">
-      <img src="assets/images/11.png" alt="إنشاء حساب" class="img-fluid" style="max-width: 350px; height: auto;">
-    </div>
+  <div class="container min-vh-100 d-flex align-items-center justify-content-center py-5 position-relative">
+    <div class="row register-wrapper w-100 justify-content-end">
+      <div class="col-lg-6 col-md-8 col-12">
+        <div class="register-card mx-auto">
+          <h2 class="register-title logo-font">إنشاء حساب</h2>
+          <form [formGroup]="registerForm" (ngSubmit)="register()" novalidate class="register-form">
 
-    <!-- نموذج إنشاء حساب -->
-    <div class="col-md-6 d-flex flex-column align-items-center align-items-md-start">
+            <!-- Username -->
+            <div class="mb-3">
+              <input type="text" formControlName="userName" class="form-control custom-input text-end"
+                placeholder="اسم المستخدم" />
+            </div>
 
-      <h2 class="mt-0 mb-4 logo-font" style="color: #5D1037; font-weight: 600; font-size: 2.5rem;">إنشاء حساب</h2>
+            <!-- Email -->
+            <div class="mb-3">
+              <input type="email" formControlName="email" class="form-control custom-input text-end"
+                placeholder="البريد الإلكتروني" />
+            </div>
 
-      <!-- نموذج تسجيل البيانات -->
-      <form [formGroup]="registerForm" (ngSubmit)="register()" novalidate class="w-75">
+            <!-- Password -->
+            <div class="mb-3">
+              <input type="password" formControlName="password" class="form-control custom-input text-end"
+                placeholder="كلمة السر" />
+            </div>
 
-        <div class="mb-3">
-          <input
-            type="text"
-            formControlName="userName"
-            class="form-control text-end"
-            placeholder="اسم المستخدم"
-            [class.is-invalid]="registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched"
-            style="border-radius: 30px; padding: 10px;">
+            <button type="submit" class="btn submit-btn w-100" [disabled]="isLoading || registerForm.invalid">
+
+              <span *ngIf="isLoading" class="btn-inner">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                جاري التحميل...
+              </span>
+
+              <span *ngIf="!isLoading">
+                إنشاء حساب </span>
+
+            </button>
+          <div class="login-link text-center mt-4">
+            <span> لديك حساب؟ </span>
+            <a routerLink="/login">تسجيل الدخول</a>
+          </div>
+          </form>
         </div>
-
-        <div class="mb-3">
-          <input
-            type="email"
-            formControlName="email"
-            class="form-control text-end"
-            placeholder="البريد الإلكتروني"
-            [class.is-invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
-            style="border-radius: 30px; padding: 10px;">
-        </div>
-
-        <div class="mb-3">
-          <input
-            type="password"
-            formControlName="password"
-            class="form-control text-end"
-            placeholder="كلمة السر"
-            [class.is-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
-            style="border-radius: 30px; padding: 10px;">
-        </div>
-
-        <!-- خانة "تذكرني" -->
-<div class="form-check d-flex align-items-center justify-content-start mb-3">
-  <input type="checkbox" class="form-check-input" id="rememberMe" style="margin-left: 5px;">
-  <label class="form-check-label ms-2" for="rememberMe" style="font-size: 1rem;">تذكرني</label>
-</div>
-
-
-
-        <!-- زر "إنشاء حساب" -->
-        <button type="submit" class="btn btn-maroon w-100 py-2" [disabled]="registerForm.invalid" style="border-radius: 30px; font-weight: 600;">
-          إنشاء الحساب
-        </button>
-      </form>
-
-      <!-- رابط لتسجيل الدخول -->
-      <div class="text-end mt-4 w-75">
-        <span>هل لديك حساب بالفعل؟</span>
-        <a routerLink="/login" style="color: #5D1037; font-weight: 600; font-size: 1.1rem;">تسجيل الدخول</a>
       </div>
     </div>
-
   </div>
 </div>

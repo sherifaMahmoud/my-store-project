@@ -1,34 +1,222 @@
-/* لو حابة تحافظي على لون معين وأستايلات خفيفة */
-
-.text-primary {
-  color: #5D1037 !important;
-
+:host {
+  display: block;
+  direction: ltr;
 }
 
-.btn-outline-primary {
-  border-color: #5D1037;
-  color: #5D1037;
+/* الصفحة كاملة */
+.login-page {
+  position: relative;
+  min-height: 100vh;
+  font-family: 'Cairo', sans-serif;
+  background-image: url('/assets/images/bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
 }
 
-.btn-outline-primary:hover {
-  background-color: #5D1037;
-  color: white;
+/* طبقة شفافة فوق الخلفية */
+.background-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(248, 245, 242, 0.35);
+  z-index: 1;
+  pointer-events: none;
 }
 
-.form-control:focus {
-  box-shadow: none;
-  border-color: #5D1037;
+
+/* يمنع اهتزاز المحتوى وقت spinner */
+.btn-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.btn-maroon {
-  border: 2px solid #4b1c2d;
-  color: #4b1c2d;
-  font-weight: 600;
-  border-radius: 4px;
+
+/* يحافظ على لون الزر حتى وهو disabled */
+.submit-btn:disabled {
+  opacity: 0.85 !important;
+  cursor: not-allowed;
+}
+
+/* spinner alignment */
+.spinner-border {
+  width: 1rem;
+  height: 1rem;
+}
+/* المحتوى */
+.login-page .container {
+  position: relative;
+  z-index: 2;
+}
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+/* الكارت */
+.login-card {
+  max-width: 500px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(8px);
+  border-radius: 32px;
+  padding: 3rem 2.5rem;
+  box-shadow: 0 25px 60px rgba(93, 16, 55, 0.12);
+}
+
+/* العنوان */
+.login-title {
+  color: #5d1037;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* الحقول */
+.custom-input {
+  border: 1.5px solid #d9d3cf;
+  border-radius: 999px;
+  padding: 14px 24px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: #555;
   transition: all 0.3s ease;
 }
 
-.btn-maroon:hover {
-  background-color: #4b1c2d;
-  color: white;
+.custom-input::placeholder {
+  color: #7a7a7a;
+}
+
+.custom-input:focus {
+  border-color: #5d1037;
+  box-shadow: 0 0 0 0.15rem rgba(93, 16, 55, 0.08);
+  background: #fff;
+}
+
+/* Remember me */
+.remember-wrapper {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.remember-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+}
+
+.remember-label .form-check-input {
+  margin: 0;
+  border-color: #d1c7cc;
+}
+
+.remember-label .form-check-input:checked {
+  background-color: #5d1037;
+  border-color: #5d1037;
+}
+
+/* الزر */
+/* .login-btn {
+  background: linear-gradient(135deg, #5d1037, #7b224c);
+  border: none;
+  color: #fff;
+  border-radius: 999px;
+  padding: 13px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 25px rgba(93, 16, 55, 0.18);
+}
+
+.login-btn:hover:not(:disabled) {
   transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(93, 16, 55, 0.25);
+}
+
+.login-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+} */
+
+/* الرابط */
+.login-link {
+  font-size: 1.05rem;
+  color: #444;
+}
+
+.login-link a {
+  color: #5d1037;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .login-card {
+    padding: 2rem 1.5rem;
+    border-radius: 24px;
+  }
+
+  .login-title {
+    font-size: 2.3rem;
+  }
+
+  .background-overlay {
+    background: rgba(248, 245, 242, 0.5);
+  }
+}
+.submit-btn {
+  background: linear-gradient(135deg, #5d1037, #7b224c);
+  border: none;
+  color: #fff;
+
+  border-radius: 999px;
+  height: 48px;
+
+  font-size: 1.05rem;
+  font-weight: 700;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 25px rgba(93, 16, 55, 0.18);
+}
+
+/* hover */
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(93, 16, 55, 0.25);
+}
+
+/* disabled (مهم جدًا) */
+.submit-btn:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+/* spinner alignment */
+.btn-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* spinner ثابت */
+.spinner-border {
+  width: 1rem;
+  height: 1rem;
 }

@@ -15,7 +15,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of cartItems">
+          <tr *ngFor="let item of cartItems; let i = index">
             <td class="align-middle">
               <img src="{{item.imageUrl}}" class="img-thumbnail" style="max-width: 80px;">
             </td>
@@ -23,15 +23,14 @@
             <td class="align-middle text-right">{{ item.price }} جنيه</td>
             <td class="align-middle">
               <div class="d-flex justify-content-center align-items-center">
-                <button class="btn btn-sm btn-outline-secondary" (click)="removeItem(item)">-</button>
+                <button class="btn btn-sm btn-outline-secondary" (click)="removeItem(i)">-</button>
                 <span class="mx-2">{{ item.quantity }}</span>
                 <button class="btn btn-sm btn-outline-secondary" (click)="additemToCart(item)">+</button>
               </div>
             </td>
             <td class="align-middle text-right">{{ item.totalPrice | number:'1.2-2' }} جنيه</td>
             <td class="align-middle text-center">
-              <button class="btn btn-sm btn-danger" (click)="removeFromCart(item)">
-                <i class="fas fa-trash-alt"></i>
+              <button class="btn btn-sm btn-danger" (click)="deleteItem(i)"> <i class="fas fa-trash-alt"></i>
               </button>
             </td>
           </tr>

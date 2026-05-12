@@ -49,17 +49,19 @@ export class LoginComponent implements AfterViewInit {
     }
 
     this.isLoading = true;
+    this.errorMessage = null;
+
     const credentials = this.loginForm.value;
 
     this.dataService.loginUser(credentials).subscribe({
       next: (data) => {
         this.isLoading = false;
+
         if (data.message === 'Login successful') {
           this.dataService.setToken(data.token, data.role);
           this.dataService.isLogined.next(true);
 
           if (data.role === 'admin') {
-            // ✅ حطيها جوه isPlatformBrowser
             if (isPlatformBrowser(this.platformId)) {
               const token = localStorage.getItem('token');
               window.location.href = `https://adminpanelyodneen.vercel.app/?token=${token}`;
@@ -71,10 +73,11 @@ export class LoginComponent implements AfterViewInit {
           this.errorMessage = 'المستخدم غير موجود أو البيانات غير صحيحة.';
         }
       },
+
       error: (err) => {
         this.isLoading = false;
         console.error('❌ Login failed:', err);
-        this.errorMessage = 'حدث خطأ في الاتصال بالسيرفر. تحقق من أن الـ API يعمل.';
+        this.errorMessage = 'حدث خطأ في الاتصال بالسيرفر.';
       },
     });
   }

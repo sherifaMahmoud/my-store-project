@@ -6,11 +6,9 @@ import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = environment.apiUrl + '/api/auth';
-  private tokenKey = 'auth_token';
+  private tokenKey = 'token';
 
   constructor(
-    private http: HttpClient,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }

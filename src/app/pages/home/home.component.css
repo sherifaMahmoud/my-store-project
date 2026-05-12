@@ -33,6 +33,33 @@
   transition: all 0.3s ease;
   border-radius: 8px;
 }
+.empty-state {
+  background: #fff;
+  border: 1px dashed #d6b4c1;
+  border-radius: 20px;
+  padding: 40px 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: 0.3s ease;
+}
+
+.empty-state:hover {
+  transform: translateY(-5px);
+}
+
+.empty-icon {
+  font-size: 3rem;
+}
+
+.empty-state h5 {
+  color: #4b1c2d;
+  font-weight: 700;
+}
+
+.empty-state p {
+  color: #777;
+  margin-bottom: 0;
+  font-size: 0.95rem;
+}
 .card-body {
   height: 100%;
   display: flex;

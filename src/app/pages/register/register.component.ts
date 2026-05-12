@@ -18,7 +18,7 @@ import { DataService } from '../../core/services/data.service';
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-
+  isLoading = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -37,22 +37,30 @@ export class RegisterComponent {
       return;
     }
 
+    this.isLoading = true;
+
     const userData = this.registerForm.value;
 
     this.dataService.registerUser(userData).subscribe({
       next: (res) => {
+        this.isLoading = false;
+
         console.log('✅ Register Response:', res);
 
         if (res.message === 'User has been created successfully') {
           alert('✅ تم إنشاء الحساب بنجاح!');
           this.router.navigate(['/login']);
-        } else if (res.message === 'User was not created successfully') {
+        }
+        else if (res.message === 'User was not created successfully') {
           alert('⚠️ المستخدم موجود بالفعل!');
-        } else {
+        }
+        else {
           alert('حدث خطأ غير متوقع أثناء التسجيل.');
         }
       },
+
       error: (err) => {
+        this.isLoading = false;
         console.error('❌ Register Error:', err);
         alert('❌ حدث خطأ في الاتصال بالسيرفر.');
       },

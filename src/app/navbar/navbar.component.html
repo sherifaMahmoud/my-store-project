@@ -4,16 +4,12 @@
     <div class="d-none d-lg-flex me-4">
       <ul class="navbar-nav">
         <li class="nav-item pe-5">
-          <a class="nav-link active whiteColor"
-             routerLink="home"
-             routerLinkActive="text-warning">
+          <a class="nav-link active whiteColor" routerLink="home" routerLinkActive="text-warning">
             عن الموقع
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active whiteColor"
-             routerLink="store"
-             routerLinkActive="text-warning">
+          <a class="nav-link active whiteColor" routerLink="store" routerLinkActive="text-warning">
             المتجر
           </a>
         </li>
@@ -22,7 +18,7 @@
 
     <!-- الشعار -->
     <a class="navbar-brand text-white position-lg-absolute start-lg-50 translate-middle-x logo-font mx-auto mx-lg-0"
-       href="#">
+      href="#">
       يُدنِين
     </a>
 
@@ -30,47 +26,41 @@
     <div class="d-none d-lg-flex ms-5">
       <ul class="navbar-nav">
         <li class="nav-item pe-5 position-relative search-container">
-          <a class="nav-link active whiteColor"
-             (click)="toggleSearch()"
-             style="cursor: pointer">
+          <a class="nav-link active whiteColor" (click)="toggleSearch()" style="cursor: pointer">
             <!-- <i class="fa-solid fa-magnifying-glass ms-2"></i> -->
           </a>
           <div *ngIf="showSearch" class="position-absolute search-box"
-               style="top: 40px; right: 0; z-index: 999; width: 250px">
-            <input type="text"
-                   class="form-control"
-                   [(ngModel)]="searchQuery"
-                   (input)="filterProducts()"
-                   placeholder="ابحث عن منتج..."/>
-            <div *ngIf="filteredProducts.length > 0"
-                 class="bg-white shadow border mt-1 rounded overflow-auto"
-                 style="max-height: 200px">
-              <div *ngFor="let product of filteredProducts"
-                   class="px-2 py-1 border-bottom product-item"
-                   (click)="goToProduct(product)">
+            style="top: 40px; right: 0; z-index: 999; width: 250px">
+            <input type="text" class="form-control" [(ngModel)]="searchQuery" (input)="filterProducts()"
+              placeholder="ابحث عن منتج..." />
+            <div *ngIf="filteredProducts.length > 0" class="bg-white shadow border mt-1 rounded overflow-auto"
+              style="max-height: 200px">
+              <div *ngFor="let product of filteredProducts" class="px-2 py-1 border-bottom product-item"
+                (click)="goToProduct(product)">
                 {{ product }}
               </div>
             </div>
             <div *ngIf="searchQuery && filteredProducts.length === 0"
-                 class="bg-white px-2 py-1 mt-1 border rounded no-results">
+              class="bg-white px-2 py-1 mt-1 border rounded no-results">
               لا توجد نتائج
             </div>
           </div>
         </li>
 
-        <li class="nav-item pe-4 position-relative">
-          <a class="nav-link active whiteColor"
-             routerLink="cart"
-             routerLinkActive="text-warning">
+        <!-- CART -->
+        <li class="nav-item pe-4 position-relative" *ngIf="!isAuthPage()">
+          <a class="nav-link active whiteColor" routerLink="cart" routerLinkActive="text-warning">
             <i class="fa-solid fa-cart-shopping ms-2"></i>
+
             <span *ngIf="cartCount > 0" class="cart-counter-navbar">
               {{ cartCount }}
             </span>
           </a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link active whiteColor" routerLink="/login">
+        <!-- LOGOUT -->
+        <li class="nav-item" *ngIf="!isAuthPage()">
+          <a class="nav-link active whiteColor" (click)="logout()">
             <i class="fa-solid fa-right-to-bracket"></i>
           </a>
         </li>
@@ -78,10 +68,7 @@
     </div>
 
     <!-- زر القائمة المنسدلة - للجوال فقط -->
-    <button class="navbar-toggler d-lg-none"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarCollapse">
+    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
       <span class="navbar-toggler-icon"></span>
     </button>
   </div>
@@ -91,58 +78,44 @@
 <div class="collapse navbar-collapse bg-white d-lg-none" id="navbarCollapse">
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link mobile-nav-link"
-         routerLink="home"
-         (click)="closeNavbar()">
+      <a class="nav-link mobile-nav-link" routerLink="home" (click)="closeNavbar()">
         <i class="fas fa-info-circle me-2"></i>
         عن الموقع
       </a>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link mobile-nav-link"
-         routerLink="store"
-         (click)="closeNavbar()">
+      <a class="nav-link mobile-nav-link" routerLink="store" (click)="closeNavbar()">
         <i class="fas fa-store me-2"></i>
         المتجر
       </a>
     </li>
 
     <li class="nav-item position-relative search-container">
-      <a class="nav-link mobile-nav-link"
-         (click)="toggleSearch()"
-         style="cursor: pointer">
+      <a class="nav-link mobile-nav-link" (click)="toggleSearch()" style="cursor: pointer">
         <i class="fas fa-search me-2"></i>
         بحث
       </a>
       <div *ngIf="showSearch" class="px-3 py-2 mobile-search-box">
-        <input type="text"
-               class="form-control mb-2 search-input"
-               [(ngModel)]="searchQuery"
-               (input)="filterProducts()"
-               placeholder="ابحث عن منتج..."/>
+        <input type="text" class="form-control mb-2 search-input" [(ngModel)]="searchQuery" (input)="filterProducts()"
+          placeholder="ابحث عن منتج..." />
 
-        <div *ngIf="filteredProducts.length > 0"
-             class="bg-white shadow border rounded overflow-auto search-results">
-          <div *ngFor="let product of filteredProducts"
-               class="px-2 py-1 border-bottom product-item"
-               (click)="goToProduct(product); closeNavbar()"
-               style="cursor: pointer;">
+        <div *ngIf="filteredProducts.length > 0" class="bg-white shadow border rounded overflow-auto search-results">
+          <div *ngFor="let product of filteredProducts" class="px-2 py-1 border-bottom product-item"
+            (click)="goToProduct(product); closeNavbar()" style="cursor: pointer;">
             {{ product }}
           </div>
         </div>
 
         <div *ngIf="searchQuery && filteredProducts.length === 0"
-             class="bg-white px-2 py-1 border rounded text-center no-results">
+          class="bg-white px-2 py-1 border rounded text-center no-results">
           لا توجد نتائج
         </div>
       </div>
     </li>
 
     <li class="nav-item pe-4 position-relative">
-      <a class="nav-link mobile-nav-link"
-         routerLink="cart"
-         (click)="closeNavbar()">
+      <a class="nav-link mobile-nav-link" routerLink="cart" (click)="closeNavbar()">
         <i class="fas fa-shopping-cart me-2"></i>
         <span *ngIf="cartCount > 0" class="cart-counter-navbar">
           {{ cartCount }}
@@ -152,9 +125,7 @@
     </li>
 
     <li class="nav-item">
-      <a class="nav-link mobile-nav-link"
-         routerLink="/login"
-         (click)="closeNavbar()">
+      <a class="nav-link mobile-nav-link" routerLink="/login" (click)="closeNavbar()">
         <i class="fas fa-user me-2"></i>
         حسابي الشخصي
       </a>

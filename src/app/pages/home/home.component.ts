@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { DataService } from '../../core/services/data.service';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { CartService } from '../../core/services/cart.services';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+
   cards: any[] = [];
   ednaa: any[] = [];
   fustan: any[] = [];
@@ -19,21 +21,40 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private cartService: CartService
   ) { }
 
   ngOnInit() {
+
     if (isPlatformBrowser(this.platformId)) {
       window.scrollTo(0, 0);
     }
 
     this.dataService.getNewItems().subscribe((items: any[]) => {
-      this.ednaa = items.filter((item) => item.categoryName === 'عباية').slice(0, 6);
-      this.fustan = items.filter((item) => item.categoryName === 'فساتين').slice(0, 6);
+
+      this.ednaa = items
+        .filter((item) => item.categoryName === 'عباية')
+        .slice(0, 6);
+
+      this.fustan = items
+        .filter((item) => item.categoryName === 'فساتين')
+        .slice(0, 6);
     });
 
     this.dataService.getOffers().subscribe((offers: any[]) => {
-      const offerImages = ['offer.jpeg', '8.jpeg', '15.jpeg', '7.jpeg', '9.jpeg', '111.jpeg', '55.jpeg', 'offer2.jpeg'];
+
+      const offerImages = [
+        'offer.jpeg',
+        '8.jpeg',
+        '15.jpeg',
+        '7.jpeg',
+        '9.jpeg',
+        '111.jpeg',
+        '55.jpeg',
+        'offer2.jpeg'
+      ];
+
       this.offers = offers.map((offer, index) => ({
         ...offer,
         image: 'assets/images/' + (offerImages[index] || 'default.jpg'),
@@ -42,6 +63,6 @@ export class HomeComponent implements OnInit {
   }
 
   addToCart(item: any) {
-    this.dataService.addToCart(item);
+    this.cartService.addToCart(item);
   }
 }

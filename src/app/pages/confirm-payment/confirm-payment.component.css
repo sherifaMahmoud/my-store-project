@@ -33,6 +33,23 @@
   border-radius: 5px;
   background-color: #fff;
 }
+.order-summary {
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.summary-box {
+  font-size: 18px;
+  padding: 10px 0;
+}
+
+.total-price {
+  color: #4b1c2d;
+  font-weight: bold;
+  font-size: 20px;
+}
 
 .table-header, .item-row {
   font-size: 14px;

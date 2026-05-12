@@ -9,6 +9,8 @@
 
 <section class="container my-5">
   <h2 class="mt-5 mb-9 text-center">العروض الخاصة</h2>
+
+  @if (offers.length > 0) {
   <div class="row">
     <div class="col-md-3 mb-4" *ngFor="let offer of offers; let i = index">
       <div class="card h-100 text-center d-flex flex-column">
@@ -16,35 +18,35 @@
         <div class="card-body d-flex flex-column justify-content-between p-2">
           <h6 class="mb-2" style="font-size: 0.9rem;">{{ offer.title }}</h6>
           <p class="text-primary mb-2" style="font-size: 0.85rem;">{{ offer.description }}</p>
-          <p class="mb-2" >خصم: {{ offer.discount }}%</p>
+          <p class="mb-2">خصم: {{ offer.discount }}%</p>
         </div>
       </div>
     </div>
   </div>
+  } @else {
+  <div class="empty-state text-center py-5">
+    <div class="empty-icon mb-3">🛍️</div>
+    <h5 class="mb-2">لا توجد عروض حالياً</h5>
+    <p>
+      فريقنا يعمل على إضافة عروضة جديدة ومميزة قريباً
+    </p>
+
+    <a routerLink="/store" class="btn btn-maroon mt-2">
+      تصفح المتجر
+    </a>
+  </div> }
 </section>
 
 <section class="container">
-  <h2 class="mt-5 mb-9 text-end">فساتين</h2>
-<div class="row">
-  <div class="col-md-3 mb-4" *ngFor="let item of fustan">
-    <div class="card h-100 text-center d-flex flex-column">
-      <img [src]="item.imageUrl" class="card-img-top" [alt]="item.description" style="height: 300px; object-fit: cover;">
-      <div class="card-body d-flex flex-column justify-content-between p-2">
-        <h6 class="mb-2" style="font-size: 0.9rem;">{{ item.name }}</h6>
-        <p class="text-primary mb-2" style="font-size: 0.85rem;">{{ item.price }} ج</p>
-        <div class="mt-auto">
-          <button class="btn btn-maroon btn-sm" (click)="addToCart(item)">أضف إلى السلة</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-  <h2 class="mb-9 text-end">عبايات</h2>
+  <h2 class="mt-5 mb-9 text-end">فساتين</h2>
+
+  @if (fustan.length > 0) {
   <div class="row">
-    <div class="col-md-3 mb-4" *ngFor="let item of ednaa">
+    <div class="col-md-3 mb-4" *ngFor="let item of fustan">
       <div class="card h-100 text-center d-flex flex-column">
-        <img [src]="item.imageUrl" class="card-img-top" [alt]="item.description" style="height: 300px; object-fit: cover;">
+        <img [src]="item.imageUrl" class="card-img-top" [alt]="item.description"
+          style="height: 300px; object-fit: cover;">
         <div class="card-body d-flex flex-column justify-content-between p-2">
           <h6 class="mb-2" style="font-size: 0.9rem;">{{ item.name }}</h6>
           <p class="text-primary mb-2" style="font-size: 0.85rem;">{{ item.price }} ج</p>
@@ -55,8 +57,49 @@
       </div>
     </div>
   </div>
+  } @else {
+  <div class="empty-state text-center py-5">
+    <div class="empty-icon mb-3">🛍️</div>
+    <h5 class="mb-2">لا توجد فساتين حالياً</h5>
+    <p>
+      فريقنا يعمل على إضافة فساتين جديدة ومميزة قريباً
+    </p>
 
+    <a routerLink="/store" class="btn btn-maroon mt-2">
+      تصفح المتجر
+    </a>
+  </div> }
 
+  <h2 class="mb-9 text-end">عبايات</h2>
+
+  @if (ednaa.length > 0) {
+  <div class="row">
+    <div class="col-md-3 mb-4" *ngFor="let item of ednaa">
+      <div class="card h-100 text-center d-flex flex-column">
+        <img [src]="item.imageUrl" class="card-img-top" [alt]="item.description"
+          style="height: 300px; object-fit: cover;">
+        <div class="card-body d-flex flex-column justify-content-between p-2">
+          <h6 class="mb-2" style="font-size: 0.9rem;">{{ item.name }}</h6>
+          <p class="text-primary mb-2" style="font-size: 0.85rem;">{{ item.price }} ج</p>
+          <div class="mt-auto">
+            <button class="btn btn-maroon btn-sm" (click)="addToCart(item)">أضف إلى السلة</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  } @else {
+  <div class="empty-state text-center py-5">
+    <div class="empty-icon mb-3">🛍️</div>
+    <h5 class="mb-2">لا توجد إدناءات حالياً</h5>
+    <p>
+      فريقنا يعمل على إضافة إدناءات جديدة ومميزة قريباً
+    </p>
+
+    <a routerLink="/store" class="btn btn-maroon mt-2">
+      تصفح المتجر
+    </a>
+  </div> }
 
 </section>
 

@@ -1,11 +1,14 @@
 import { Component, OnInit, OnDestroy, HostListener, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { DataService } from '../core/services/data.service';
 import { Subscription } from 'rxjs';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { filter } from 'rxjs/operators';
+
+import { DataService } from '../core/services/data.service';
 import { ProductService } from '../core/services/product.service';
+import { CartService } from '../core/services/cart.services';
 
 @Component({
   selector: 'app-navbar',
@@ -15,24 +18,41 @@ import { ProductService } from '../core/services/product.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+
   cartCount = 0;
   private subscription!: Subscription;
 
   showSearch = false;
   searchQuery = '';
-  allProducts: string[] = ['خمار', 'إدناء', 'فستان', 'نقاب', 'إكسسوار'];
-  filteredProducts: string[] = [];
+  filteredProducts: any[] = [];
+
   isMobileView = false;
+  currentUrl = '';
+
   products: any[] = [];
 
   constructor(
     private dataService: DataService,
     private router: Router,
     private productService: ProductService,
+    private cartService: CartService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
   ngOnInit(): void {
+
+    // cart count
+    this.subscription = this.cartService.cartCount$.subscribe(count => {
+      this.cartCount = count;
+    });
+
+    // track route changes
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.currentUrl = event.urlAfterRedirects;
+      });
+
     this.checkViewport();
   }
 
@@ -40,7 +60,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
   }
 
-  @HostListener('window:resize', ['$event'])
+  // ============ SHOW / HIDE LOGIC ============
+  isAuthPage(): boolean {
+    return this.currentUrl.includes('login') || this.currentUrl.includes('register');
+  }
+
+  // ============ RESPONSIVE ============
+  @HostListener('window:resize')
   onResize() {
     this.checkViewport();
   }
@@ -48,6 +74,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   checkViewport() {
     if (isPlatformBrowser(this.platformId)) {
       this.isMobileView = window.innerWidth < 992;
+
       if (!this.isMobileView) {
         this.showSearch = false;
         this.searchQuery = '';
@@ -56,14 +83,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
   }
 
+  // ============ SEARCH ============
   toggleSearch() {
     if (isPlatformBrowser(this.platformId)) {
-      if (this.isMobileView || window.innerWidth >= 992) {
-        this.showSearch = !this.showSearch;
-        if (!this.showSearch) {
-          this.searchQuery = '';
-          this.filteredProducts = [];
-        }
+      this.showSearch = !this.showSearch;
+
+      if (!this.showSearch) {
+        this.searchQuery = '';
+        this.filteredProducts = [];
       }
     }
   }
@@ -75,26 +102,31 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     const search = this.searchQuery.toLowerCase();
-    this.filteredProducts = this.products.filter(
-      (product) =>
-        (product.name && product.name.toLowerCase().includes(search)) ||
-        (product.description && product.description.toLowerCase().includes(search))
+
+    this.filteredProducts = this.products.filter(p =>
+      p.name?.toLowerCase().includes(search) ||
+      p.description?.toLowerCase().includes(search)
     );
   }
 
-  goToProduct(product: string) {
-    console.log('تم اختيار المنتج:', product);
+  goToProduct(product: any) {
+    console.log(product);
     this.showSearch = false;
     this.searchQuery = '';
     this.closeNavbar();
   }
 
+  // ============ NAVBAR ============
   closeNavbar() {
     if (isPlatformBrowser(this.platformId)) {
       const navbar = document.getElementById('navbarCollapse');
-      if (navbar?.classList.contains('show')) {
-        navbar.classList.remove('show');
-      }
+      navbar?.classList.remove('show');
     }
+  }
+
+  // optional logout
+  logout() {
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 }
