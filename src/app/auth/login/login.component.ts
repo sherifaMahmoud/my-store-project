@@ -75,9 +75,33 @@ export class LoginComponent implements AfterViewInit {
       },
 
       error: (err) => {
+
         this.isLoading = false;
+
         console.error('❌ Login failed:', err);
-        this.errorMessage = 'حدث خطأ في الاتصال بالسيرفر.';
+
+        if (
+          err.error?.message === 'User not found' ||
+          err.error?.message === 'Invalid password'
+        ) {
+
+          this.errorMessage =
+            'اسم المستخدم أو كلمة المرور غير صحيحة';
+
+        }
+
+        else if (err.status === 0) {
+
+          this.errorMessage =
+            'تعذر الاتصال بالسيرفر';
+
+        }
+
+        else {
+
+          this.errorMessage =
+            'اسم المستخدم أو كلمة المرور غير صحيحة';
+        }
       },
     });
   }

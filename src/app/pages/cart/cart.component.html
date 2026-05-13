@@ -1,74 +1,195 @@
-<div class="container mt-5">
-  <div *ngIf="cartItems.length > 0; else emptyCart">
-    <h2 class="mb-4 text-right">🛒 سلة المشتريات</h2>
+<div class="cart-page container py-5" dir="rtl">
 
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <thead class="thead-light">
-          <tr>
-            <th class="text-right">الصورة</th>
-            <th class="text-right">المنتج</th>
-            <th class="text-right">السعر</th>
-            <th class="text-right">الكمية</th>
-            <th class="text-right">المجموع</th>
-            <th class="text-right">إجراءات</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of cartItems; let i = index">
-            <td class="align-middle">
-              <img src="{{item.imageUrl}}" class="img-thumbnail" style="max-width: 80px;">
-            </td>
-            <td class="align-middle text-right">{{ item.name }}</td>
-            <td class="align-middle text-right">{{ item.price }} جنيه</td>
-            <td class="align-middle">
-              <div class="d-flex justify-content-center align-items-center">
-                <button class="btn btn-sm btn-outline-secondary" (click)="removeItem(i)">-</button>
-                <span class="mx-2">{{ item.quantity }}</span>
-                <button class="btn btn-sm btn-outline-secondary" (click)="additemToCart(item)">+</button>
-              </div>
-            </td>
-            <td class="align-middle text-right">{{ item.totalPrice | number:'1.2-2' }} جنيه</td>
-            <td class="align-middle text-center">
-              <button class="btn btn-sm btn-danger" (click)="deleteItem(i)"> <i class="fas fa-trash-alt"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+  <!-- CART EXISTS -->
+  <div *ngIf="cartItems.length > 0; else emptyCart">
+
+    <!-- HEADER -->
+    <div class="cart-header mb-5">
+
+      <h2 class="cart-title">
+
+        سلة المشتريات
+
+      </h2>
+
+      <p class="cart-subtitle">
+
+        راجعي منتجاتك قبل إتمام الطلب
+
+      </p>
+
     </div>
 
-    <div class="row justify-content-end mt-4">
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-body text-right">
-            <h5 class="card-title">ملخص الطلب</h5>
-            <hr>
-            <div class="d-flex justify-content-between">
-              <strong>الإجمالي:</strong>
-              <span>{{ totalAmount | number:'1.2-2' }} جنيه</span>
+    <div class="row g-4">
+
+      <!-- PRODUCTS -->
+      <div class="col-lg-8">
+
+        <div class="cart-item" *ngFor="let item of cartItems; let i = index">
+
+          <!-- IMAGE -->
+          <div class="cart-image-wrapper">
+
+            <img [src]="item.imageUrl" class="cart-image" alt="product" />
+
+          </div>
+
+          <!-- INFO -->
+          <div class="cart-info">
+
+            <h5 class="product-name">
+
+              {{ item.name }}
+
+            </h5>
+
+            <p class="product-price">
+
+              {{ item.price }} جنيه
+
+            </p>
+
+            <!-- QUANTITY -->
+            <div class="quantity-wrapper">
+
+              <button class="qty-btn" (click)="removeItem(i)">
+
+                −
+
+              </button>
+
+              <span class="quantity">
+
+                {{ item.quantity }}
+
+              </span>
+
+              <button class="qty-btn" (click)="additemToCart(item)">
+
+                +
+
+              </button>
+
             </div>
-            <button routerLink="/payment" class="btn btn-maroon btn-block mt-3">
-              إتمام الشراء
-            </button>
-            <button class="btn btn-outline-maroon btn-block mt-3" (click)="clearAllCart()">
-              مسح كل السلة
+
+          </div>
+
+          <!-- TOTAL -->
+          <div class="cart-total">
+
+            <h6>
+
+              {{ item.totalPrice | number:'1.2-2' }} ج
+
+            </h6>
+
+            <button class="delete-btn" (click)="deleteItem(i)">
+
+              <i class="fas fa-trash-alt"></i>
+
             </button>
 
           </div>
+
         </div>
+
       </div>
+
+      <!-- SUMMARY -->
+      <div class="col-lg-4">
+
+        <div class="summary-card">
+
+          <h4 class="summary-title">
+
+            ملخص الطلب
+
+          </h4>
+
+          <div class="summary-row">
+
+            <span>
+
+              عدد المنتجات
+
+            </span>
+
+            <strong>
+
+              {{ cartItems.length }}
+
+            </strong>
+
+          </div>
+
+          <div class="summary-row total-row">
+
+            <span>
+
+              الإجمالي
+
+            </span>
+
+            <strong>
+
+              {{ totalAmount | number:'1.2-2' }} جنيه
+
+            </strong>
+
+          </div>
+
+          <!-- BUTTONS -->
+          <button routerLink="/payment" class="btn btn-maroon w-100">
+
+            إتمام الشراء
+
+          </button>
+
+          <button class="btn btn-outline-maroon w-100 mt-3" (click)="clearAllCart()">
+
+            مسح السلة
+
+          </button>
+
+        </div>
+
+      </div>
+
     </div>
+
   </div>
 
+  <!-- EMPTY CART -->
   <ng-template #emptyCart>
-    <div class="text-center py-5">
-      <h3 class="text-muted">سلة المشتريات فارغة</h3>
-      <i class="fas fa-shopping-cart fa-4x text-muted my-4"></i>
-      <p class="mb-4">لا توجد منتجات في سلة المشتريات الخاصة بك</p>
+
+    <div class="empty-cart">
+
+      <div class="empty-icon">
+
+        <i class="fas fa-bag-shopping"></i>
+
+      </div>
+
+      <h3>
+
+        سلة المشتريات فارغة
+
+      </h3>
+
+      <p>
+
+        لم تقومي بإضافة أي منتجات بعد
+
+      </p>
+
       <a routerLink="/store" class="btn btn-maroon">
-        <i class="fas fa-arrow-left mr-2"></i> العودة للتسوق
+
+        العودة للتسوق
+
       </a>
+
     </div>
+
   </ng-template>
+
 </div>

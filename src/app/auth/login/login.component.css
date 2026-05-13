@@ -23,7 +23,60 @@
   z-index: 1;
   pointer-events: none;
 }
+/* ===== Error Box ===== */
+.error-box {
 
+  background: rgba(255, 240, 240, 0.95);
+
+  border: 1px solid #ffd6d6;
+
+  color: #c0392b;
+
+  border-radius: 18px;
+
+  padding: 14px 16px;
+
+  margin-bottom: 18px;
+
+  font-size: .95rem;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  animation: shake .35s ease;
+}
+
+.error-box i {
+
+  font-size: 1rem;
+}
+
+/* ===== Shake Animation ===== */
+@keyframes shake {
+
+  0% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-4px);
+  }
+
+  50% {
+    transform: translateX(4px);
+  }
+
+  75% {
+    transform: translateX(-4px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
 
 /* يمنع اهتزاز المحتوى وقت spinner */
 .btn-content {

@@ -1,50 +1,152 @@
-<!-- register.component.html -->
 <div class="register-page">
+
   <div class="background-overlay"></div>
 
   <div class="container min-vh-100 d-flex align-items-center justify-content-center py-5 position-relative">
+
     <div class="row register-wrapper w-100 justify-content-end">
+
       <div class="col-lg-6 col-md-8 col-12">
+
         <div class="register-card mx-auto">
-          <h2 class="register-title logo-font">إنشاء حساب</h2>
+
+          <!-- Title -->
+          <h2 class="register-title logo-font">
+            إنشاء حساب
+          </h2>
+
+          <!-- Form -->
           <form [formGroup]="registerForm" (ngSubmit)="register()" novalidate class="register-form">
 
             <!-- Username -->
             <div class="mb-3">
+
               <input type="text" formControlName="userName" class="form-control custom-input text-end"
-                placeholder="اسم المستخدم" />
+                placeholder="اسم المستخدم" [class.is-invalid]="
+                  submitted &&
+                  registerForm.get('userName')?.invalid
+                " />
+
+              <div class="validation-error" *ngIf="
+                  submitted &&
+                  registerForm.get('userName')?.errors
+                ">
+
+                <span *ngIf="
+                    registerForm
+                    .get('userName')
+                    ?.errors?.['required']
+                  ">
+                  اسم المستخدم مطلوب
+                </span>
+
+                <span *ngIf="
+                    registerForm
+                    .get('userName')
+                    ?.errors?.['minlength']
+                  ">
+                  اسم المستخدم يجب أن يكون 3 أحرف على الأقل
+                </span>
+
+              </div>
+
             </div>
 
             <!-- Email -->
             <div class="mb-3">
+
               <input type="email" formControlName="email" class="form-control custom-input text-end"
-                placeholder="البريد الإلكتروني" />
+                placeholder="البريد الإلكتروني" [class.is-invalid]="
+                  submitted &&
+                  registerForm.get('email')?.invalid
+                " />
+
+              <div class="validation-error" *ngIf="
+                  submitted &&
+                  registerForm.get('email')?.errors
+                ">
+
+                <span *ngIf="
+                    registerForm
+                    .get('email')
+                    ?.errors?.['required']
+                  ">
+                  البريد الإلكتروني مطلوب
+                </span>
+
+                <span *ngIf="
+                    registerForm
+                    .get('email')
+                    ?.errors?.['email']
+                  ">
+                  البريد الإلكتروني غير صالح
+                </span>
+
+              </div>
+
             </div>
 
             <!-- Password -->
-            <div class="mb-3">
+            <div class="mb-2">
+
               <input type="password" formControlName="password" class="form-control custom-input text-end"
-                placeholder="كلمة السر" />
+                placeholder="كلمة السر" [class.is-invalid]="
+                  submitted &&
+                  registerForm.get('password')?.invalid
+                " />
+
+
             </div>
 
-            <button type="submit" class="btn submit-btn w-100" [disabled]="isLoading || registerForm.invalid">
+            <!-- API Error -->
+            <div class="error-message mb-3" *ngIf="errorMessage">
+              {{ errorMessage }}
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn submit-btn w-100" [disabled]="
+                isLoading ||
+                !registerForm.get('userName')?.valid ||
+                !registerForm.get('email')?.valid ||
+                passwordValue.length < 8
+              ">
 
               <span *ngIf="isLoading" class="btn-inner">
-                <span class="spinner-border spinner-border-sm me-2"></span>
+
+                <span class="spinner-border spinner-border-sm me-2">
+                </span>
+
                 جاري التحميل...
+
               </span>
 
               <span *ngIf="!isLoading">
-                إنشاء حساب </span>
+                إنشاء حساب
+              </span>
 
             </button>
-          <div class="login-link text-center mt-4">
-            <span> لديك حساب؟ </span>
-            <a routerLink="/login">تسجيل الدخول</a>
-          </div>
+
+            <!-- Login Link -->
+            <div class="login-link text-center mt-4">
+
+              <span>
+                لديك حساب؟
+              </span>
+
+              <a routerLink="/login">
+                تسجيل الدخول
+              </a>
+
+            </div>
+
           </form>
+
         </div>
+
       </div>
+
     </div>
+
   </div>
+
 </div>

@@ -48,8 +48,11 @@ export class StoreComponent implements OnInit {
 
     this.dataService.getNewItems().subscribe((data: any[]) => {
 
-      this.products = data;
-
+      this.products = data.filter(
+        (product) =>
+          product.isActive === true &&
+          product.stockQuantity > 0
+      );
       this.categories = [...new Set(data.map((p) => p.categoryName))];
 
       this.colors = [...new Set(data.map((p) => p.color))];
@@ -94,7 +97,29 @@ export class StoreComponent implements OnInit {
   }
 
   addToCart(product: any) {
-    this.cartService.addToCart(product);
+
+    if (product.stockQuantity > 0) {
+
+      // يضيف للسلة
+      this.cartService.addToCart(product);
+
+      // يقلل الكمية
+      product.stockQuantity--;
+
+      // لو خلص يشيله من الصفحة
+      if (product.stockQuantity === 0) {
+
+        this.products =
+          this.products.filter(
+            p => p.productId !== product.productId
+          );
+
+        this.visibleProducts =
+          this.visibleProducts.filter(
+            p => p.productId !== product.productId
+          );
+      }
+    }
   }
 
   filterProducts() {

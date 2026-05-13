@@ -1,4 +1,276 @@
 .footer {
+
+  position: relative;
+
+  background:
+    linear-gradient(
+      135deg,
+      #3a1322,
+      #5a1f35,
+      #6d2f46
+    );
+
   color: white;
-  width: 100%;
+
+  padding:
+    70px 0 25px;
+
+  overflow: hidden;
+}
+
+/* ================= OVERLAY ================= */
+
+.footer-overlay {
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(255,255,255,.08),
+      transparent 30%
+    );
+
+  pointer-events: none;
+}
+
+/* ================= BRAND ================= */
+
+.footer-brand {
+
+  position: relative;
+}
+
+.logo-font {
+
+  font-size: 3rem;
+
+  font-weight: 800;
+
+  margin-bottom: 16px;
+
+  letter-spacing: 1px;
+}
+
+.brand-text {
+
+  color: rgba(255,255,255,.78);
+
+  line-height: 2;
+
+  font-size: 15px;
+
+  max-width: 260px;
+}
+
+.brand-line {
+
+  width: 80px;
+
+  height: 4px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #fff,
+      rgba(255,255,255,.3)
+    );
+
+  margin-top: 18px;
+}
+
+/* ================= TITLES ================= */
+
+.footer-title {
+
+  font-size: 1.2rem;
+
+  font-weight: 700;
+
+  margin-bottom: 24px;
+
+  position: relative;
+}
+
+.footer-title::after {
+
+  content: "";
+
+  position: absolute;
+
+  right: 0;
+
+  bottom: -10px;
+
+  width: 55px;
+
+  height: 3px;
+
+  border-radius: 999px;
+
+  background: rgba(255,255,255,.5);
+}
+
+/* ================= LINKS ================= */
+
+.footer-links li {
+
+  margin-bottom: 14px;
+}
+
+.footer-links a {
+
+  color: rgba(255,255,255,.82);
+
+  text-decoration: none;
+
+  transition: .3s ease;
+
+  font-weight: 500;
+
+  display: inline-flex;
+
+  align-items: center;
+}
+
+.footer-links a:hover,
+.footer-links .active-link {
+
+  color: #f6d57a;
+
+  transform:
+    translateX(-4px);
+}
+
+/* ================= CONTACT ================= */
+
+.contact-list li {
+
+  margin-bottom: 16px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  color: rgba(255,255,255,.82);
+}
+
+.contact-list i {
+
+  width: 36px;
+
+  height: 36px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255,255,255,.1);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 14px;
+
+  transition: .3s ease;
+}
+
+.contact-list li:hover i {
+
+  background: white;
+
+  color: #5a1f35;
+
+  transform:
+    translateY(-2px);
+}
+
+.contact-list a {
+
+  color: rgba(255,255,255,.82);
+
+  text-decoration: none;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  transition: .3s ease;
+}
+
+.contact-list a:hover {
+
+  color: #f6d57a;
+}
+
+/* ================= BOTTOM ================= */
+
+.footer-bottom {
+
+  margin-top: 50px;
+
+  padding-top: 22px;
+
+  border-top:
+    1px solid rgba(255,255,255,.12);
+}
+
+.footer-bottom p {
+
+  margin: 0;
+
+  color: rgba(255,255,255,.65);
+
+  font-size: 14px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+
+  .footer {
+
+    padding-top: 55px;
+  }
+
+  .logo-font {
+
+    font-size: 2.3rem;
+  }
+
+  .footer-brand,
+  .footer-section {
+
+    text-align: center;
+  }
+
+  .brand-line,
+  .footer-title::after {
+
+    right: 50%;
+
+    transform:
+      translateX(50%);
+  }
+
+  .contact-list li,
+  .contact-list a {
+
+    justify-content: center;
+  }
+
+  .brand-text {
+
+    margin-inline: auto;
+  }
 }

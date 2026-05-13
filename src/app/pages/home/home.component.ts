@@ -33,13 +33,24 @@ export class HomeComponent implements OnInit {
 
     this.dataService.getNewItems().subscribe((items: any[]) => {
 
-      this.ednaa = items
-        .filter((item) => item.categoryName === 'عباية')
+      // فساتين
+      this.fustan = items
+        .filter(
+          (item) =>
+            item.categoryName === 'فستان'
+        )
         .slice(0, 6);
 
-      this.fustan = items
-        .filter((item) => item.categoryName === 'فساتين')
+      // إدناءات
+      this.ednaa = items
+        .filter(
+          (item) =>
+            item.categoryName === 'إدناء'
+        )
         .slice(0, 6);
+
+      console.log(items);
+
     });
 
     this.dataService.getOffers().subscribe((offers: any[]) => {
@@ -57,7 +68,9 @@ export class HomeComponent implements OnInit {
 
       this.offers = offers.map((offer, index) => ({
         ...offer,
-        image: 'assets/images/' + (offerImages[index] || 'default.jpg'),
+        image:
+          'assets/images/' +
+          (offerImages[index] || 'default.jpg'),
       }));
     });
   }

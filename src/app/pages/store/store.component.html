@@ -55,19 +55,57 @@
     <!-- المنتجات -->
     <div class="col-md-9">
       <div class="row">
-        <div *ngFor="let product of visibleProducts" class="col-md-3 mb-4">
-          <div class="card h-100">
-            <img [src]="product.imageUrl" class="card-img-top" alt="منتج">
-            <div class="card-body text-center d-flex flex-column">
-              <h5 class="card-title">{{product.name}}</h5>
-              <p class="price fw-bold">{{product.price}} ج</p>
-              <div class="mt-auto">
-                <button (click)="addToCart(product)" class="btn btn-maroon w-100">أضف إلى السلة</button>
-                <a [routerLink]="['/product-details', product.productId]" class="btn btn-outline-maroon">عرض المنتج</a>
-              </div>
-            </div>
-          </div>
-        </div>
+<div *ngFor="let product of visibleProducts" class="col-md-3 mb-4">
+
+  <div class="card h-100">
+
+    <!-- لو الكمية خلصت -->
+    <div class="out-of-stock" *ngIf="product.stockQuantity === 0">
+      نفذت الكمية
+    </div>
+
+    <img [src]="product.imageUrl" class="card-img-top" alt="منتج">
+
+    <div class="card-body text-center d-flex flex-column">
+
+      <h5 class="card-title">
+        {{product.name}}
+      </h5>
+
+      <p class="price fw-bold">
+        {{product.price}} ج
+      </p>
+
+      <!-- الكمية -->
+      <div class="stock-wrapper">
+
+        <span class="stock-badge in-stock" *ngIf="product.stockQuantity > 0">
+          متبقي {{ product.stockQuantity }}
+        </span>
+
+        <span class="stock-badge out-stock" *ngIf="product.stockQuantity === 0">
+          غير متوفر
+        </span>
+
+      </div>
+
+      <div class="mt-auto">
+
+        <button (click)="addToCart(product)" class="btn btn-maroon w-100" [disabled]="product.stockQuantity === 0">
+          أضف إلى السلة
+        </button>
+
+        <a [routerLink]="['/product-details', product.productId]" class="btn btn-outline-maroon">
+          عرض المنتج
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
       </div>
 
       <!-- عرض المزيد -->

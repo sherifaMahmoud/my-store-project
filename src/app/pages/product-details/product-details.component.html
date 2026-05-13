@@ -1,111 +1,237 @@
 <div class="container py-5" dir="rtl">
-  <div class="row">
-    <div class="col-md-6">
-      <img [src]="product?.imageUrl" class="img-fluid rounded mb-3" alt="product image" />
 
-      <div class="d-flex gap-2 flex-wrap">
+  <div class="row g-5 align-items-start">
+
+    <!-- IMAGE SECTION -->
+    <div class="col-lg-6">
+
+      <div class="image-wrapper">
+
+        <img [src]="product?.imageUrl" class="img-fluid main-image" alt="product image" />
+
+      </div>
+
+      <!-- EXTRA IMAGES -->
+      <div class="d-flex gap-3 flex-wrap mt-4 justify-content-center">
+
         <img *ngFor="let img of product?.images" [src]="img" class="img-thumbnail" alt="thumbnail" />
+
       </div>
 
-      <div class="mt-4">
-        <h5 class="fw-bold">الوصف</h5>
-        <p class="product-description">
-          {{ truncatedDescription }}
-          <span *ngIf="isTruncated">
-            ...
-            <a class="colorText" href="javascript:void(0);" (click)="toggleDescription()">عرض المزيد</a>
-          </span>
-          <span *ngIf="!isTruncated">
-            <a class="colorText" href="javascript:void(0);" (click)="toggleDescription()">عرض أقل</a>
-          </span>
-        </p>
-      </div>
     </div>
 
-    <div class="col-md-6">
-      <h2 class="fw-bold">{{ product?.name }}</h2>
-      <p class="text-muted">{{ product?.category }}</p>
+    <!-- DETAILS -->
+    <div class="col-lg-6">
 
-      <div class="mb-2">
-        <ng-container *ngIf="product?.rating">
-          <span *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
-            <i class="fa-star" [class.fa-solid]="i < product.rating.rate" [class.fa-regular]="i >= product.rating.rate"
-              style="color: #f5b301"></i>
-          </span>
-          <span class="text-muted">({{ product.rating.count }} تقييم)</span>
-        </ng-container>
+      <span class="category-badge">
+        {{ product?.categoryName }}
+      </span>
+
+      <h2 class="product-title mt-3">
+        {{ product?.name }}
+      </h2>
+
+      <!-- PRICE -->
+      <h3 class="product-price">
+        {{ product?.price }} ج.م
+      </h3>
+
+      <!-- STOCK -->
+      <div class="stock-status mb-4">
+
+        <span class="stock-badge in-stock" *ngIf="product?.stockQuantity > 0">
+
+          متوفر • متبقي {{ product?.stockQuantity }}
+
+        </span>
+
+        <span class="stock-badge out-stock" *ngIf="product?.stockQuantity === 0">
+
+          غير متوفر حالياً
+
+        </span>
+
       </div>
 
-      <h4 class="text-maroon fw-bold">{{ product?.price }} ج.م</h4>
-      <div class="mb-3">
-        <div *ngIf="product?.color">
+      <!-- DETAILS -->
+      <div class="details-box mb-4">
+
+        <div *ngIf="product?.color" class="detail-item">
+
           <strong>اللون:</strong>
-          <span class="ms-2">
-            <span class="color-circle" [ngStyle]="{ 'background-color': product.color }"
-              title="{{ product.color }}"></span>
+
+          <div class="d-flex align-items-center gap-2">
+
+            <span class="color-circle" [ngStyle]="{ 'background-color': product.color }">
+
+            </span>
+
             {{ product.color }}
-          </span>
+
+          </div>
+
         </div>
 
-        <div *ngIf="product?.size">
+        <div *ngIf="product?.size" class="detail-item">
+
           <strong>المقاس:</strong>
-          <span class="badge bg-maroon ms-2">{{ product.size }}</span>
+
+          <span class="size-badge">
+            {{ product.size }}
+          </span>
+
         </div>
+
+        <div *ngIf="product?.fabric" class="detail-item">
+
+          <strong>الخامة:</strong>
+
+          <span>
+            {{ product.fabric }}
+          </span>
+
+        </div>
+
       </div>
 
-      <div class="d-flex gap-2 flex-wrap">
-        <button class="btn btn-outline-maroon" (click)="addToCart()">
-          <i class="fa-solid fa-cart-plus ms-1"></i> أضف إلى السلة
+      <!-- DESCRIPTION -->
+      <div class="description-box">
+
+        <h5 class="section-title">
+          الوصف
+        </h5>
+
+        <p class="product-description">
+
+          {{ truncatedDescription }}
+
+          <span *ngIf="isTruncated">
+
+            ...
+
+            <a class="toggle-link" href="javascript:void(0);" (click)="toggleDescription()">
+
+              عرض المزيد
+
+            </a>
+
+          </span>
+
+          <span *ngIf="!isTruncated">
+
+            <a class="toggle-link" href="javascript:void(0);" (click)="toggleDescription()">
+
+              عرض أقل
+
+            </a>
+
+          </span>
+
+        </p>
+
+      </div>
+
+      <!-- BUTTONS -->
+      <div class="action-buttons">
+
+        <button class="btn btn-maroon" (click)="addToCart()" [disabled]="product?.stockQuantity === 0">
+
+          <i class="fa-solid fa-cart-plus ms-2"></i>
+
+          أضف إلى السلة
+
         </button>
 
-        <button routerLink="/payment" class="btn btn-maroon">
+        <button routerLink="/payment" class="btn btn-outline-maroon" [disabled]="product?.stockQuantity === 0">
+
           إتمام الشراء
+
         </button>
+
       </div>
 
     </div>
+
   </div>
 
-  <div class="mt-5">
-    <h4 class="fw-bold mb-4">منتجات أخرى قد تعجبك</h4>
+  <!-- RELATED PRODUCTS -->
+  <div class="related-section mt-5 pt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+      <h4 class="related-title">
+        منتجات أخرى قد تعجبك
+      </h4>
+
+    </div>
 
     <div id="relatedProductsCarousel" class="carousel slide" data-bs-ride="carousel">
+
       <div class="carousel-inner">
+
         <div *ngFor="let group of groupedRelatedProducts; let i = index" class="carousel-item" [class.active]="i === 0">
-          <div class="row">
-            <div class="col-md-4" *ngFor="let related of group">
-              <div class="card">
-                <div class="card-img-container">
-                  <img [src]="related.imageUrl" class="card-img-top" alt="related" />
-                </div>
-                <div class="card-body d-flex flex-column">
-                  <h6 class="card-title">{{ related.name }}</h6>
-                  <p class="card-text">{{ related.price }} ج.م</p>
 
-                  <div class="mt-auto">
-                    <a [routerLink]="['/product-details', related.productId]"
-                      class="btn btn-outline-maroon btn-sm w-100">
+          <div class="row g-4">
 
-                      التفاصيل
-                    </a>
-                  </div>
+            <div class="col-lg-4" *ngFor="let related of group">
+
+              <div class="related-card">
+
+                <div class="related-image-wrapper">
+
+                  <img [src]="related.imageUrl" class="related-image" alt="related" />
+
                 </div>
+
+                <div class="related-body">
+
+                  <h6 class="related-name">
+                    {{ related.name }}
+                  </h6>
+
+                  <p class="related-price">
+                    {{ related.price }} ج.م
+                  </p>
+
+                  <a [routerLink]="['/product-details', related.productId]" class="btn btn-outline-maroon w-100">
+
+                    عرض المنتج
+
+                  </a>
+
+                </div>
+
               </div>
+
             </div>
+
           </div>
+
         </div>
+
       </div>
 
+      <!-- CONTROLS -->
       <button class="carousel-control-prev" type="button" data-bs-target="#relatedProductsCarousel"
         data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">السابق</span>
+
+        <span class="carousel-control-prev-icon" aria-hidden="true">
+
+        </span>
+
       </button>
+
       <button class="carousel-control-next" type="button" data-bs-target="#relatedProductsCarousel"
         data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">التالي</span>
+
+        <span class="carousel-control-next-icon" aria-hidden="true">
+
+        </span>
+
       </button>
+
     </div>
+
   </div>
+
 </div>
